@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app">
     <navigation />
     <router-view />
   </div>
@@ -7,6 +7,7 @@
 
 <script>
 import Navigation from "@/components/navigation";
+import "@/reset.css";
 
 export default {
   components: {
@@ -16,11 +17,19 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+:root {
+  --grey: #6f6c77;
+  --green: #32db9e;
+  --white: #ffffff;
+  --bg-color: var(--grey);
+}
+
+.app {
+  font-family: "Roboto Condensed", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: white;
+  background-color: var(--bg-color);
+  height: 100%;
 }
 </style>
