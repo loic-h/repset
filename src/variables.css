@@ -3,9 +3,26 @@
   --grey: #6f6c77;
   --green: #32db9e;
   --white: #ffffff;
+
   --bg-color: var(--grey);
+  --nav-link: rgba(var(--white), 0.5);
+  --nav-link-active: var(--white);
 
   /* Sizes */
   --max-width: 30rem;
   --space: 1rem;
+
+  /* Typography */
+  --font-size-p: 1.1rem;
+  --font-size-counter: 5rem;
+}
+
+.link {
+  font-style: italic;
+  font-weight: bold;
+  color: var(--nav-link);
+}
+
+.link-active {
+  color: var(--nav-link-active);
 }

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <router-link to="/stopwatch">Stopwatch</router-link>
+    <router-link to="/stopwatch" class="link">Stopwatch</router-link>
   </nav>
 </template>
 
@@ -11,16 +11,13 @@ export default {
 </script>
 
 <style scoped>
-.nav {
-  padding: 30px;
-}
-
-.nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.nav a.router-link-exact-active {
-  color: #42b983;
+nav {
+  position: absolute;
+  top: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: var(--space);
+  box-sizing: border-box;
 }
 </style>

@@ -14,5 +14,7 @@ export default new Router({
       name: "stopwatch",
       component: Stopwatch
     }
-  ]
+  ],
+  linkActiveClass: "link-active",
+  linkExactActiveClass: "link-active"
 });

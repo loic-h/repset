@@ -14,7 +14,7 @@ import "@/variables.css";
 
 export default {
   components: {
-    navigation: Navigation
+    Navigation
   }
 };
 </script>
@@ -24,7 +24,8 @@ export default {
   font-family: "Roboto Condensed", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: white;
+  font-size: var(--font-size-p);
+  color: var(--white);
   background-color: var(--bg-color);
   height: 100%;
 }
@@ -32,8 +33,8 @@ export default {
 .app-container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space);
   height: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 </style>
