@@ -32,3 +32,6 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Designs
+https://www.figma.com/file/0kBpa2eAutGkZsC15uxX9Qf0/designs?node-id=32%3A0
