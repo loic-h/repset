@@ -11,3 +11,7 @@ new Vue({
     return h(App);
   }
 }).$mount("#app");
+
+if (router.currentRoute.path === "/") {
+  router.replace("/stopwatch");
+}
