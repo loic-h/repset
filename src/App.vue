@@ -1,13 +1,16 @@
 <template>
   <div class="app">
-    <navigation />
-    <router-view />
+    <div class="app-container">
+      <navigation />
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
 import Navigation from "@/components/navigation";
 import "@/reset.css";
+import "@/variables.css";
 
 export default {
   components: {
@@ -17,13 +20,6 @@ export default {
 </script>
 
 <style>
-:root {
-  --grey: #6f6c77;
-  --green: #32db9e;
-  --white: #ffffff;
-  --bg-color: var(--grey);
-}
-
 .app {
   font-family: "Roboto Condensed", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,5 +27,13 @@ export default {
   color: white;
   background-color: var(--bg-color);
   height: 100%;
+}
+
+.app-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space);
+  height: 100%;
+  box-sizing: border-box;
 }
 </style>

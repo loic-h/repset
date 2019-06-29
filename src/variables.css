@@ -1,0 +1,11 @@
+:root {
+  /* Colors */
+  --grey: #6f6c77;
+  --green: #32db9e;
+  --white: #ffffff;
+  --bg-color: var(--grey);
+
+  /* Sizes */
+  --max-width: 30rem;
+  --space: 1rem;
+}
