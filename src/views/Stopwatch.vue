@@ -1,13 +1,23 @@
 <template>
   <div class="stopwatch">
-    <counter :active="counterActive" />
-    <remote main="play" @main-click="onMainClick" />
+    <counter
+      :active="counterActive"
+      :start-time="store.startTime"
+      :offset-time="store.offsetTime"
+    />
+    <remote
+      main="play"
+      right="more"
+      @main-click="onMainClick"
+      @right-click="onMoreClick"
+    />
   </div>
 </template>
 
 <script>
 import Counter from "@/components/counter";
 import Remote from "@/components/remote";
+import currentStore from "@/stores/current";
 
 export default {
   components: {
@@ -16,12 +26,24 @@ export default {
   },
   data() {
     return {
-      counterActive: false
+      store: currentStore.state
     };
+  },
+  computed: {
+    counterActive() {
+      return this.store.id === "stopwatch" && this.store.running;
+    }
   },
   methods: {
     onMainClick(isActive) {
-      this.counterActive = isActive;
+      if (isActive) {
+        currentStore.start("stopwatch");
+      } else {
+        currentStore.pause();
+      }
+    },
+    onMoreClick() {
+      console.log("more");
     }
   }
 };

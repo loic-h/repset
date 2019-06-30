@@ -1,39 +1,52 @@
 <template>
   <div class="counter">
     <div class="counter_time">{{ minutes }}:{{ seconds }}</div>
+    <div class="counter_mark"></div>
   </div>
 </template>
 
 <script>
 export default {
   limit: 59 * 60 + 59,
-  interval: null,
+  startTime: 0,
   props: {
-    initialTime: { type: Number, default: 0 },
-    countdown: { type: Boolean, default: false },
-    active: { type: Boolean, require: true }
+    active: { type: Boolean, default: false },
+    startTime: { type: Number, default: 0 },
+    offsetTime: { type: Number, default: 0 },
+    countdown: { type: Boolean, default: false }
   },
   data() {
     return {
-      time: this.initialTime
+      time: 0
     };
   },
   computed: {
     minutes() {
-      return Math.floor(this.time / 60);
+      return parseInt(this.timeInSeconds / 60);
     },
     seconds() {
-      return prettifyTime(this.time % 60);
+      return prettifyTime(this.timeInSeconds % 60);
+    },
+    timeInSeconds() {
+      return parseInt(this.time / 1000);
+    }
+  },
+  methods: {
+    update() {
+      this.time = Date.now() - this.startTime + this.offsetTime;
+      if (this.active) {
+        requestAnimationFrame(this.update);
+      }
     }
   },
   watch: {
     active: {
       handler(newVal) {
-        clearInterval(this.interval);
         if (newVal) {
-          this.interval = setInterval(() => {
-            this.time = this.countdown ? this.time - 1 : this.time + 1;
-          }, 1000);
+          requestAnimationFrame(this.update);
+          this.$emit("play");
+        } else {
+          this.$emit("pause", this.time);
         }
       },
       immediate: true
