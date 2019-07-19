@@ -26,7 +26,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--font-size-p);
   color: var(--white);
-  background-color: var(--bg-color);
+  background-color: var(--bg);
   height: 100%;
 }
 

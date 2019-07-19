@@ -1,6 +1,10 @@
 <template>
   <nav>
-    <router-link to="/stopwatch" class="link">Stopwatch</router-link>
+    <router-link
+      to="/stopwatch"
+      class="link">
+        Stopwatch
+      </router-link>
   </nav>
 </template>
 

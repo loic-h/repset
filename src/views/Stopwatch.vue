@@ -2,40 +2,66 @@
   <div class="stopwatch">
     <counter
       :active="counterActive"
-      :start-time="store.startTime"
-      :offset-time="store.offsetTime"
+      :start-time="currentStore.startTime"
+      :offset-time="currentStore.offsetTime"
     />
     <remote
       main="play"
+      @main-click="onPlayClick"
       right="more"
-      @main-click="onMainClick"
       @right-click="onMoreClick"
     />
+    <modal v-if="showMenu">
+      <link-list :items="linkList" />
+      <remote
+        v-slot:remote
+        left="back"
+        @left-click="onMenuBackClick"
+        main="add"
+        @main-click="onAddClick"
+      />
+    </modal>
   </div>
 </template>
 
 <script>
 import Counter from "@/components/counter";
 import Remote from "@/components/remote";
+import Modal from "@/components/modal";
+import LinkList from "@/components/link-list";
 import currentStore from "@/stores/current";
+import repsStore from "@/stores/current";
 
 export default {
   components: {
     Counter,
-    Remote
+    Remote,
+    Modal,
+    LinkList
   },
   data() {
     return {
-      store: currentStore.state
+      currentStore: currentStore.state,
+      repsStore: repsStore.state,
+      showMenu: false
     };
   },
   computed: {
     counterActive() {
-      return this.store.id === "stopwatch" && this.store.running;
+      return this.currentStore.id === "stopwatch" && this.currentStore.running;
+    },
+    linkList() {
+      const list = [
+        {
+          path: "/stopwatch",
+          label: "Stopwatch"
+        }
+      ];
+      return list;
     }
   },
   methods: {
-    onMainClick(isActive) {
+    onPlayClick(isActive) {
       if (isActive) {
         currentStore.start("stopwatch");
       } else {
@@ -43,7 +69,13 @@ export default {
       }
     },
     onMoreClick() {
-      console.log("more");
+      this.showMenu = true;
+    },
+    onAddClick() {
+      this.$router.push("/create");
+    },
+    onMenuBackClick() {
+      this.showMenu = false;
     }
   }
 };

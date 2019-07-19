@@ -1,10 +1,15 @@
 <template>
   <div class="remote">
-    <div class="remote_place"></div>
+    <div class="remote_place">
+      <remote-button
+        v-if="left"
+        :type="left"
+        @click="onLeftClick"
+      />
+    </div>
     <div class="remote_place">
       <remote-button
         v-if="main"
-        class="remote_main"
         :type="main"
         size="big"
         @click="onMainClick"
@@ -13,7 +18,6 @@
     <div class="remote_place">
       <remote-button
         v-if="right"
-        class="remote_main"
         :type="right"
         @click="onRightClick"
       />
@@ -25,6 +29,7 @@
 import RemoteButton from "./remote-button";
 export default {
   props: {
+    left: { type: String },
     main: { type: String },
     right: { type: String }
   },
@@ -32,6 +37,9 @@ export default {
     RemoteButton
   },
   methods: {
+    onLeftClick(active) {
+      this.$emit("left-click", active);
+    },
     onMainClick(active) {
       this.$emit("main-click", active);
     },
@@ -46,7 +54,8 @@ export default {
 .remote {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;

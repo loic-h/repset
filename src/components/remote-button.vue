@@ -1,6 +1,10 @@
 <template>
-  <button class="remote-button" @click="onClick">
-    <vue-material-icon :name="icon" :size="iconSize"></vue-material-icon>
+  <button
+    class="remote-button"
+    @click="onClick">
+    <vue-material-icon
+      :name="icon"
+      :size="iconSize" />
   </button>
 </template>
 
@@ -22,6 +26,10 @@ export default {
           return this.active ? "pause_circle_filled" : "play_circle_filled";
         case "more":
           return "more_horiz";
+        case "add":
+          return "add_circle";
+        case "back":
+          return "arrow_back";
         default:
           return this.main;
       }
