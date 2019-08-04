@@ -1,22 +1,16 @@
 <template>
   <div class="app">
     <div class="app-container">
-      <navigation />
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
-import Navigation from "@/components/navigation";
 import "@/reset.css";
 import "@/variables.css";
 
-export default {
-  components: {
-    Navigation
-  }
-};
+export default {};
 </script>
 
 <style>

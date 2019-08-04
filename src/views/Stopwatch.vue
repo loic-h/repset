@@ -1,16 +1,15 @@
 <template>
   <div class="stopwatch">
+    <navigation />
     <counter
       :active="counterActive"
       :start-time="currentStore.startTime"
-      :offset-time="currentStore.offsetTime"
-    />
+      :offset-time="currentStore.offsetTime" />
     <remote
       main="play"
       @main-click="onPlayClick"
       right="more"
-      @right-click="onMoreClick"
-    />
+      @right-click="onMoreClick" />
     <modal v-if="showMenu">
       <link-list :items="linkList" />
       <remote
@@ -18,13 +17,13 @@
         left="back"
         @left-click="onMenuBackClick"
         main="add"
-        @main-click="onAddClick"
-      />
+        @main-click="onAddClick" />
     </modal>
   </div>
 </template>
 
 <script>
+import Navigation from "@/components/navigation";
 import Counter from "@/components/counter";
 import Remote from "@/components/remote";
 import Modal from "@/components/modal";
@@ -34,6 +33,7 @@ import repsStore from "@/stores/current";
 
 export default {
   components: {
+    Navigation,
     Counter,
     Remote,
     Modal,
