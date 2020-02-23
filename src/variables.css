@@ -1,13 +1,11 @@
 :root {
   /* Colors */
-  --grey: #6f6c77;
-  --green: #32db9e;
-  --white: #ffffff;
-  --black: #5f5757;
 
-  --bg: var(--grey);
-  --bg-modal: var(--white);
-  --nav-link: rgba(var(--white), 0.5);
+  --white: #ffffff;
+  --black: #000000;
+
+  --bg: var(--white);
+  --nav-link: rgba(var(--black), 0.5);
 
   /* Sizes */
   --max-width: 30rem;

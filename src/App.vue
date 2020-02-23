@@ -19,7 +19,7 @@ export default {};
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--font-size-p);
-  color: var(--white);
+  color: var(--black);
   background-color: var(--bg);
   height: 100%;
 }
