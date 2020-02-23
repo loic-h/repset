@@ -1,5 +1,5 @@
 <template>
-  <div class="create">
+  <div class="workout">
     <headline
       :value="item.label"
       @change="onHeadlineChange"

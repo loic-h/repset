@@ -1,19 +1,19 @@
 <template>
   <div class="remote">
-    <div class="remote_place">
+    <div>
       <remote-button
         v-if="left"
         :type="left"
         @click="onLeftClick" />
     </div>
-    <div class="remote_place">
+    <div>
       <remote-button
         v-if="main"
         :type="main"
         size="big"
         @click="onMainClick" />
     </div>
-    <div class="remote_place">
+    <div>
       <remote-button
         v-if="right"
         :type="right"
@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .remote {
   position: absolute;
   bottom: 0;
@@ -61,7 +61,7 @@ export default {
   box-sizing: border-box;
 }
 
-.remote_place {
+.remote > div {
   flex-basis: 4rem;
   display: flex;
   justify-content: center;

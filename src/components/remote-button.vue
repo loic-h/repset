@@ -1,6 +1,5 @@
 <template>
   <button
-    class="remote-button"
     @click="onClick">
     <vue-material-icon
       :name="icon"

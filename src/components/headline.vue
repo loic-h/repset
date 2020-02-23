@@ -2,11 +2,11 @@
   <div class="headline">
     <input
       v-if="edit"
-      class="headline_input"
+      class="input"
       v-model="localValue" />
     <div
       v-else
-      class="headline_label">
+      class="label">
       {{ value }}
     </div>
   </div>
@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .headline {
   position: absolute;
   top: 0;
@@ -43,7 +43,7 @@ export default {
   box-sizing: border-box;
 }
 
-.headline_input {
+.input {
   text-align: center;
   text-decoration: underline;
 }

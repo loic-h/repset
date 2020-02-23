@@ -6,7 +6,7 @@
       v-for="item in items"
       :key="item.path">
       <router-link
-        class="link-list__item link"
+        class="item link"
         active-class="is-active"
         :to="item.path"
         v-html="item.label" />
