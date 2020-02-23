@@ -9,8 +9,7 @@
         class="link-list__item link"
         active-class="is-active"
         :to="item.path"
-        v-html="item.label"
-      />
+        v-html="item.label" />
     </li>
   </ul>
 </template>

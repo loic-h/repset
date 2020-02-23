@@ -3,8 +3,8 @@
     <navigation />
     <counter
       :active="counterActive"
-      :start-time="currentStore.startTime"
-      :offset-time="currentStore.offsetTime" />
+      :start-time="$store.state.current.startTime"
+      :offset-time="$store.state.current.offsetTime" />
     <remote
       main="play"
       @main-click="onPlayClick"
@@ -28,8 +28,8 @@ import Counter from "@/components/counter";
 import Remote from "@/components/remote";
 import Modal from "@/components/modal";
 import LinkList from "@/components/link-list";
-import currentStore from "@/stores/current";
-import repsStore from "@/stores/current";
+
+const ID = "stopwatch";
 
 export default {
   components: {
@@ -41,14 +41,18 @@ export default {
   },
   data() {
     return {
-      currentStore: currentStore.state,
-      repsStore: repsStore.state,
       showMenu: false
     };
   },
   computed: {
+    currentId() {
+      return this.$store.state.current.id;
+    },
+    isCurrentRunning() {
+      return this.$store.state.current.running;
+    },
     counterActive() {
-      return this.currentStore.id === "stopwatch" && this.currentStore.running;
+      return this.currentId === ID && this.isCurrentRunning;
     },
     linkList() {
       const list = [
@@ -63,9 +67,9 @@ export default {
   methods: {
     onPlayClick(isActive) {
       if (isActive) {
-        currentStore.start("stopwatch");
+        this.$store.commit("current/start", ID);
       } else {
-        currentStore.pause();
+        this.$store.commit("current/pause");
       }
     },
     onMoreClick() {

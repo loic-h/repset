@@ -16,7 +16,6 @@
 <script>
 import Remote from "@/components/remote";
 import Headline from "@/components/headline";
-import repsStore from "@/stores/reps";
 
 export default {
   props: {
@@ -27,7 +26,7 @@ export default {
       return this.$route.params.id;
     },
     item() {
-      return repsStore.state.items[this.id];
+      return this.$store.reps.state.items[this.id];
     }
   },
   components: {
@@ -36,7 +35,7 @@ export default {
   },
   methods: {
     onHeadlineChange(value) {
-      repsStore.update(this.id, { label: value });
+      this.$store.reps.update(this.id, { label: value });
     },
     onBackClick() {
       this.$router.go(-1);

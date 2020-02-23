@@ -4,23 +4,20 @@
       <remote-button
         v-if="left"
         :type="left"
-        @click="onLeftClick"
-      />
+        @click="onLeftClick" />
     </div>
     <div class="remote_place">
       <remote-button
         v-if="main"
         :type="main"
         size="big"
-        @click="onMainClick"
-      />
+        @click="onMainClick" />
     </div>
     <div class="remote_place">
       <remote-button
         v-if="right"
         :type="right"
-        @click="onRightClick"
-      />
+        @click="onRightClick" />
     </div>
   </div>
 </template>
