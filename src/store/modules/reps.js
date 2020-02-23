@@ -1,8 +1,16 @@
 const state = {
-  items: {}
+  items: {},
+  itemIds: []
 };
 
-const getters = {};
+const getters = {
+  itemSet: state => {
+    return state.itemIds.map(id => ({
+      id,
+      ...state.items[id]
+    }));
+  }
+};
 
 const mutations = {
   add(state, payload) {
@@ -13,6 +21,7 @@ const mutations = {
     state.items[id] = {
       label
     };
+    state.itemIds.push(id);
   },
   delete(state, id) {
     delete state.items[id];
