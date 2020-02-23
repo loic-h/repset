@@ -1,12 +1,10 @@
 <template>
-  <ul
-    class="link-list"
-    v-if="items.length > 0">
+  <ul v-if="items.length > 0">
     <li
       v-for="item in items"
       :key="item.path">
       <router-link
-        class="item link"
+        class="link"
         active-class="is-active"
         :to="item.path"
         v-html="item.label" />
@@ -21,3 +19,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+ul {
+  text-align: center;
+}
+
+ul li:not(:last-child) {
+  margin-bottom: var(--space);
+}
+</style>
