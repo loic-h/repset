@@ -8,8 +8,6 @@ import "./registerServiceWorker";
 Vue.config.productionTip = false;
 Vue.component(VueMaterialIcon.name, VueMaterialIcon);
 
-console.log(store.modules)
-
 new Vue({
   el: "#app",
   router,

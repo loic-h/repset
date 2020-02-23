@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Stopwatch from "@/views/Stopwatch";
+import List from "@/views/List";
 import Workout from "@/views/Workout";
 
 Vue.use(Router);
@@ -13,6 +14,10 @@ export default new Router({
     {
       path: "/stopwatch",
       component: Stopwatch
+    },
+    {
+      path: "/list",
+      component: List
     },
     {
       path: "/workout/:id",

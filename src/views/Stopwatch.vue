@@ -10,15 +10,6 @@
       @main-click="onPlayClick"
       right="more"
       @right-click="onMoreClick" />
-    <modal v-if="showMenu">
-      <link-list :items="linkList" />
-      <remote
-        v-slot:remote
-        left="back"
-        @left-click="onMenuBackClick"
-        main="add"
-        @main-click="onAddClick" />
-    </modal>
   </div>
 </template>
 
@@ -26,8 +17,6 @@
 import Navigation from "@/components/navigation";
 import Counter from "@/components/counter";
 import Remote from "@/components/remote";
-import Modal from "@/components/modal";
-import LinkList from "@/components/link-list";
 
 const ID = "stopwatch";
 
@@ -35,14 +24,7 @@ export default {
   components: {
     Navigation,
     Counter,
-    Remote,
-    Modal,
-    LinkList
-  },
-  data() {
-    return {
-      showMenu: false
-    };
+    Remote
   },
   computed: {
     currentId() {
@@ -53,15 +35,6 @@ export default {
     },
     counterActive() {
       return this.currentId === ID && this.isCurrentRunning;
-    },
-    linkList() {
-      const list = [
-        {
-          path: "/stopwatch",
-          label: "Stopwatch"
-        }
-      ];
-      return list;
     }
   },
   methods: {
@@ -73,13 +46,7 @@ export default {
       }
     },
     onMoreClick() {
-      this.showMenu = true;
-    },
-    onAddClick() {
-      this.$router.push("/create");
-    },
-    onMenuBackClick() {
-      this.showMenu = false;
+      this.$router.push("/list");
     }
   }
 };
