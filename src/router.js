@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from "./store";
 import Stopwatch from "@/views/Stopwatch";
 import List from "@/views/List";
 import Workout from "@/views/Workout";
@@ -33,8 +34,8 @@ export default new Router({
     {
       path: "/create",
       beforeEnter: (to, from, next) => {
-        // const id  = this.$store.reps.create();
-        next(`/workout/${id}/edit`);
+        store.dispatch("reps/create", { label: "New Workout" })
+          .then(id => next(`/workout/${id}/edit`));
       }
     }
   ],

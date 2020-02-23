@@ -1,15 +1,17 @@
 <template>
   <div class="workout">
-    <headline
-      :value="item.label"
-      @change="onHeadlineChange"
-      :edit="edit" />
-    <remote
-      v-slot:remote
-      left="back"
-      @left-click="onBackClick"
-      main="add"
-      @main-click="onAddClick" />
+    <div v-if="item">
+      <headline
+        :value="item.label"
+        @change="onHeadlineChange"
+        :edit="edit" />
+      <remote
+        v-slot:remote
+        left="back"
+        @left-click="onBackClick"
+        main="add"
+        @main-click="onAddClick" />
+    </div>
   </div>
 </template>
 
@@ -26,7 +28,7 @@ export default {
       return this.$route.params.id;
     },
     item() {
-      return this.$store.reps.state.items[this.id];
+      return this.$store.state.reps.items[this.id];
     }
   },
   components: {
@@ -35,13 +37,23 @@ export default {
   },
   methods: {
     onHeadlineChange(value) {
-      this.$store.reps.update(this.id, { label: value });
+      this.$store.commit("reps/update", this.id, { label: value });
     },
     onBackClick() {
       this.$router.go(-1);
     },
     onAddClick() {
       console.log("add");
+    }
+  },
+  watch: {
+    item: {
+      handler(newValue) {
+        if (!newValue) {
+          this.$router.push("/list");
+        }
+      },
+      immediate: true
     }
   }
 }

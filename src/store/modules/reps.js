@@ -6,8 +6,8 @@ const getters = {};
 
 const mutations = {
   add(state, payload) {
-    const id = UID();
     const {
+      id,
       label
     } = payload;
     state.items[id] = {
@@ -27,9 +27,9 @@ const mutations = {
 };
 
 const actions = {
-  create({ coomit }, payload) {
+  create({ commit }, payload) {
     const id = UID();
-    commit('add', payload);
+    commit('add', { ...payload, id });
     return id;
   }
 };
@@ -41,6 +41,7 @@ const UID = () => {
 }
 
 export default {
+  namespaced: true,
   state,
   getters,
   actions,
