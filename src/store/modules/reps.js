@@ -26,11 +26,11 @@ const mutations = {
   delete(state, id) {
     delete state.items[id];
   },
-  update(state, id, params) {
-    const item = { ...state.items[id] };
-    state.items[id] = {
+  update(state, payload) {
+    const item = { ...state.items[payload.id] };
+    state.items[payload.id] = {
       ...item,
-      ...params
+      ...payload.params
     };
   }
 };

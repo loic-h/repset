@@ -37,7 +37,10 @@ export default {
   },
   methods: {
     onHeadlineChange(value) {
-      this.$store.commit("reps/update", this.id, { label: value });
+      this.$store.commit("reps/update", {
+        id: this.id,
+        params: { label: value }
+      });
     },
     onBackClick() {
       this.$router.go(-1);
