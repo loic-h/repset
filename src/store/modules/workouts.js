@@ -1,13 +1,13 @@
 const state = {
-  items: {},
-  itemIds: []
+  sets: {},
+  setIds: []
 };
 
 const getters = {
-  itemSet: state => {
-    return state.itemIds.map(id => ({
+  sets: state => {
+    return state.setIds.map(id => ({
       id,
-      ...state.items[id]
+      ...state.sets[id]
     }));
   }
 };
@@ -18,17 +18,17 @@ const mutations = {
       id,
       label
     } = payload;
-    state.items[id] = {
+    state.sets[id] = {
       label
     };
-    state.itemIds.push(id);
+    state.setIds.push(id);
   },
   delete(state, id) {
-    delete state.items[id];
+    delete state.sets[id];
   },
   update(state, payload) {
-    const item = { ...state.items[payload.id] };
-    state.items[payload.id] = {
+    const set = { ...state.sets[payload.id] };
+    state.sets[payload.id] = {
       ...item,
       ...payload.params
     };

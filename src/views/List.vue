@@ -26,9 +26,9 @@ export default {
           path: "/stopwatch",
           label: "Stopwatch"
         },
-        ...this.$store.getters["reps/itemSet"].map(item => ({
-          ...item,
-          path: `/workout/${item.id}/edit`
+        ...this.$store.getters["workouts/sets"].map(set => ({
+          ...set,
+          path: `/workouts/${set.id}/edit`
         }))
       ];
       return list;

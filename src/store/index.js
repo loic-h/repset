@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import current from "./modules/current";
-import reps from "./modules/reps";
+import workouts from "./modules/workouts";
 
 Vue.use(Vuex);
 
@@ -10,7 +10,7 @@ const store = new Vuex.Store({
   plugins: [createPersistedState()],
   modules: {
     current,
-    reps
+    workouts
   },
   strict: true
 });

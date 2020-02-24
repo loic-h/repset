@@ -21,11 +21,11 @@ export default new Router({
       component: List
     },
     {
-      path: "/workout/:id",
+      path: "/workouts/:id",
       component: Workout
     },
     {
-      path: "/workout/:id/edit",
+      path: "/workouts/:id/edit",
       component: Workout,
       props: {
         edit: true
@@ -34,8 +34,8 @@ export default new Router({
     {
       path: "/create",
       beforeEnter: (to, from, next) => {
-        store.dispatch("reps/create", { label: "New Workout" })
-          .then(id => next(`/workout/${id}/edit`));
+        store.dispatch("workouts/create", { label: "New Workout" })
+          .then(id => next(`/workouts/${id}/edit`));
       }
     }
   ],

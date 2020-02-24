@@ -28,7 +28,7 @@ export default {
       return this.$route.params.id;
     },
     item() {
-      return this.$store.state.reps.items[this.id];
+      return this.$store.state.workouts.sets[this.id];
     }
   },
   components: {
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     onHeadlineChange(value) {
-      this.$store.commit("reps/update", {
+      this.$store.commit("workouts/update", {
         id: this.id,
         params: { label: value }
       });
