@@ -1,8 +1,8 @@
 <template>
   <div class="stopwatch">
     <navigation />
-    <counter
-      :active="counterActive"
+    <clock
+      :active="clockActive"
       :start-time="$store.state.current.startTime"
       :offset-time="$store.state.current.offsetTime" />
     <remote
@@ -15,7 +15,7 @@
 
 <script>
 import Navigation from "@/components/navigation";
-import Counter from "@/components/counter";
+import Clock from "@/components/clock";
 import Remote from "@/components/remote";
 
 const ID = "stopwatch";
@@ -23,7 +23,7 @@ const ID = "stopwatch";
 export default {
   components: {
     Navigation,
-    Counter,
+    Clock,
     Remote
   },
   computed: {
@@ -33,7 +33,7 @@ export default {
     isCurrentRunning() {
       return this.$store.state.current.running;
     },
-    counterActive() {
+    clockActive() {
       return this.currentId === ID && this.isCurrentRunning;
     }
   },

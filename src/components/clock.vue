@@ -1,5 +1,5 @@
 <template>
-  <div class="counter">
+  <div class="clock">
     <div class="time">{{ minutes }}:{{ seconds }}</div>
     <div class="mark"></div>
   </div>
@@ -60,8 +60,8 @@ const prettifyTime = time => {
 </script>
 
 <style scoped>
-.counter {
-  font-size: var(--font-size-counter);
+.clock {
+  font-size: var(--font-size-clock);
   display: flex;
   justify-content: center;
   align-items: center;
