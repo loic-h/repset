@@ -1,11 +1,13 @@
 <template>
   <div class="clock">
-    <div class="time">{{ minutes }}:{{ seconds }}</div>
+    <counter :time="timeInSeconds" />
     <div class="mark"></div>
   </div>
 </template>
 
 <script>
+import Counter from "./counter";
+
 export default {
   limit: 59 * 60 + 59,
   startTime: 0,
@@ -21,15 +23,12 @@ export default {
     };
   },
   computed: {
-    minutes() {
-      return parseInt(this.timeInSeconds / 60);
-    },
-    seconds() {
-      return prettifyTime(this.timeInSeconds % 60);
-    },
     timeInSeconds() {
       return parseInt(this.time / 1000);
     }
+  },
+  components: {
+    Counter
   },
   methods: {
     update() {
@@ -53,17 +52,10 @@ export default {
     }
   }
 };
-
-const prettifyTime = time => {
-  return `0${time}`.slice(-2);
-};
 </script>
 
 <style scoped>
 .clock {
   font-size: var(--font-size-clock);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

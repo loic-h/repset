@@ -56,7 +56,8 @@ export default {
 .stopwatch {
   padding-top: 30vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 </style>

@@ -56,6 +56,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: 100%;
   color: var(--green);
   padding: var(--space);
   box-sizing: border-box;
