@@ -1,23 +1,32 @@
 <template>
   <div class="workout">
-    <div v-if="item">
+    <template v-if="item">
       <headline
         :value="item.label"
         @change="onHeadlineChange"
         :edit="edit" />
+      <main-content class="repetitions">
+        <div>
+          <repetition
+            :key="index"
+            v-for="(repetition, index) in item.repetitions" />
+        </div>
+      </main-content>
       <remote
         v-slot:remote
         left="back"
         @left-click="onBackClick"
         main="add"
         @main-click="onAddClick" />
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
 import Remote from "@/components/remote";
 import Headline from "@/components/headline";
+import Repetition from "@/components/repetition";
+import MainContent from "@/components/main-content";
 
 export default {
   props: {
@@ -33,7 +42,9 @@ export default {
   },
   components: {
     Remote,
-    Headline
+    Headline,
+    Repetition,
+    MainContent
   },
   methods: {
     onHeadlineChange(value) {

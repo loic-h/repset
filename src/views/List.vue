@@ -1,6 +1,10 @@
 <template>
   <div class="list">
-    <link-list :items="linkList" />
+    <main-content :modifiers="['no-top-padding']">
+      <link-list
+        class="link-list"
+        :items="linkList" />
+    </main-content>
     <remote
       v-slot:remote
       left="back"
@@ -13,11 +17,13 @@
 <script>
 import Remote from "@/components/remote";
 import LinkList from "@/components/link-list";
+import MainContent from "@/components/main-content";
 
 export default {
   components: {
     Remote,
-    LinkList
+    LinkList,
+    MainContent
   },
   computed: {
     linkList() {
@@ -53,5 +59,14 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+.link-list {
+  flex-grow: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

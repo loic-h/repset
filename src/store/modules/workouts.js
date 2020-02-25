@@ -1,3 +1,17 @@
+const DEFAULT_REPETITION = {
+  time: 3,
+  items: [
+    {
+      label: "Work!",
+      duration: 180
+    },
+    {
+      label: "Work!",
+      duration: 180
+    }
+  ]
+};
+
 const state = {
   sets: {},
   setIds: []
@@ -19,7 +33,8 @@ const mutations = {
       label
     } = payload;
     state.sets[id] = {
-      label
+      label,
+      repetitions: [ DEFAULT_REPETITION ]
     };
     state.setIds.push(id);
   },
