@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .headline {
-  position: absolute;
+  position: sticky;
   top: 0;
   display: flex;
   width: 100%;

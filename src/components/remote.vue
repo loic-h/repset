@@ -49,8 +49,8 @@ export default {
 
 <style scoped>
 .remote {
-  position: absolute;
-  bottom: 0;
+  position: sticky;
+  top: 100%;
   left: 0;
   right: 0;
   display: flex;

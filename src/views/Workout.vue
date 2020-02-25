@@ -61,3 +61,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.workout {
+  height: 100%;
+}
+</style>
