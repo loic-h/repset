@@ -86,7 +86,7 @@ export default {
     item: {
       handler(newValue) {
         if (!newValue) {
-          this.$router.push("/list");
+          this.$router.push("/workouts");
         }
       },
       immediate: true

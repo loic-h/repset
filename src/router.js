@@ -17,7 +17,7 @@ export default new Router({
       component: Stopwatch
     },
     {
-      path: "/list",
+      path: "/workouts",
       component: List
     },
     {
