@@ -1,12 +1,12 @@
 const DEFAULT_REPETITION = {
-  time: 3,
+  repeat: 3,
   items: [
     {
-      label: "Work!",
+      label: "WORK!",
       duration: 180
     },
     {
-      label: "Work!",
+      label: "REST...",
       duration: 180
     }
   ]
@@ -42,7 +42,7 @@ const mutations = {
     delete state.sets[id];
   },
   update(state, payload) {
-    const set = { ...state.sets[payload.id] };
+    const item = { ...state.sets[payload.id] };
     state.sets[payload.id] = {
       ...item,
       ...payload.params

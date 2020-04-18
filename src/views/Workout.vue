@@ -5,19 +5,23 @@
         :value="item.label"
         @change="onHeadlineChange"
         :edit="edit" />
-      <main-content class="repetitions">
-        <div>
+      <main-content>
+        <div class="repetitions">
           <repetition
             :key="index"
-            v-for="(repetition, index) in item.repetitions" />
+            :index="index"
+            v-for="(item, index) in item.repetitions"
+            v-bind="item"
+            @change="onRepetitionChange"
+            class="repetition" />
         </div>
       </main-content>
       <remote
         v-slot:remote
         left="back"
         @left-click="onBackClick"
-        main="add"
-        @main-click="onAddClick" />
+        main="play"
+        @main-click="onPlayClick" />
     </template>
   </div>
 </template>
@@ -37,7 +41,7 @@ export default {
       return this.$route.params.id;
     },
     item() {
-      return this.$store.state.workouts.sets[this.id];
+      return { ...this.$store.state.workouts.sets[this.id] };
     }
   },
   components: {
@@ -56,8 +60,16 @@ export default {
     onBackClick() {
       this.$router.go(-1);
     },
-    onAddClick() {
-      console.log("add");
+    onPlayClick() {
+      console.log("play");
+    },
+    onRepetitionChange(payload, index) {
+      const repetitions = [...this.item.repetitions];
+      repetitions[index] = payload;
+      this.$store.commit("workouts/update", {
+        id: this.id,
+        params: { repetitions }
+      });
     }
   },
   watch: {
@@ -72,3 +84,20 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.workout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.repetitions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+}
+</style>

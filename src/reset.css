@@ -48,11 +48,13 @@ textarea {
   font-family: inherit;
   margin: 0;
   outline: 0;
+}
 
-  &:invalid {
-    outline: 0;
-    box-shadow: none;
-  }
+input:invalid,
+label:invalid,
+textarea:invalid {
+  outline: 0;
+  box-shadow: none;
 }
 
 input::-ms-clear {
