@@ -40,6 +40,10 @@ const mutations = {
   },
   delete(state, id) {
     delete state.sets[id];
+    const index = state.setIds.indexOf(id);
+    if (index >= 0) {
+      state.setIds.splice(index, 1);
+    }
   },
   update(state, payload) {
     const item = { ...state.sets[payload.id] };
@@ -61,7 +65,7 @@ const actions = {
 const UID = () => {
   var array = new Uint32Array(1);
   window.crypto.getRandomValues(array);
-  return array[0];
+  return array[0] + "";
 }
 
 export default {

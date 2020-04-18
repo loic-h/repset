@@ -21,7 +21,9 @@
         left="back"
         @left-click="onBackClick"
         main="play"
-        @main-click="onPlayClick" />
+        @main-click="onPlayClick"
+        right="delete"
+        @right-click="onDeleteClick" />
     </template>
   </div>
 </template>
@@ -41,7 +43,11 @@ export default {
       return this.$route.params.id;
     },
     item() {
-      return { ...this.$store.state.workouts.sets[this.id] };
+      const item = this.$store.state.workouts.sets[this.id];
+      if (item) {
+        return { ...item };
+      }
+      return null;
     }
   },
   components: {
@@ -58,10 +64,14 @@ export default {
       });
     },
     onBackClick() {
-      this.$router.go(-1);
+      this.$router.push("/workouts");
     },
     onPlayClick() {
       console.log("play");
+    },
+    onDeleteClick() {
+      this.$store.commit("workouts/delete", this.id);
+      this.$router.push("/workouts");
     },
     onRepetitionChange(payload, index) {
       const repetitions = [...this.item.repetitions];

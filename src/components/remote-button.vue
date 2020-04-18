@@ -29,6 +29,8 @@ export default {
           return "add_circle";
         case "back":
           return "arrow_back";
+        case "delete":
+          return "delete";
         default:
           return this.main;
       }
