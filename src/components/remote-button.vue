@@ -11,18 +11,19 @@
 export default {
   props: {
     type: { type: String, required: true },
-    size: { type: String, default: "small" }
+    size: { type: String, default: "small" },
+    active: { type: Boolean, default: false }
   },
   data() {
     return {
-      active: false
+      localActive: this.active
     };
   },
   computed: {
     icon() {
       switch (this.type) {
         case "play":
-          return this.active ? "pause_circle_filled" : "play_circle_filled";
+          return this.localActive ? "pause_circle_filled" : "play_circle_filled";
         case "more":
           return "more_horiz";
         case "add":
@@ -31,6 +32,8 @@ export default {
           return "arrow_back";
         case "delete":
           return "delete";
+        case "reset":
+          return "replay"
         default:
           return this.main;
       }
@@ -42,10 +45,15 @@ export default {
       return 32;
     }
   },
+  watch: {
+    active(value) {
+      this.localActive = value;
+    }
+  },
   methods: {
     onClick() {
-      this.active = !this.active;
-      this.$emit("click", this.active);
+      this.localActive = !this.localActive;
+      this.$emit("click", this.localActive);
     }
   }
 };

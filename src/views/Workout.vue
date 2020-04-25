@@ -6,7 +6,13 @@
         @change="onHeadlineChange"
         :edit="edit" />
       <main-content>
-        <div class="repetitions">
+        <div
+          v-if="isCurrent">
+          yo
+        </div>
+        <div
+          v-else
+          class="repetitions">
           <repetition
             :key="index"
             :index="index"
@@ -21,6 +27,7 @@
         left="back"
         @left-click="onBackClick"
         main="play"
+        :main-active="isCurrent"
         @main-click="onPlayClick"
         right="delete"
         @right-click="onDeleteClick" />
@@ -48,6 +55,12 @@ export default {
         return { ...item };
       }
       return null;
+    },
+    isCurrent() {
+      return this.$store.state.current.id === this.id;
+    },
+    isRunning() {
+      return this.isCurrent && this.$store.state.running;
     }
   },
   components: {
@@ -64,10 +77,10 @@ export default {
       });
     },
     onBackClick() {
-      this.$router.push("/workouts");
+      this.$router.go(-1);
     },
     onPlayClick() {
-      console.log("play");
+      this.$store.commit(`current/${this.isRunning ? "pause" : "start"}`, this.id);
     },
     onDeleteClick() {
       this.$store.commit("workouts/delete", this.id);

@@ -11,6 +11,7 @@
         v-if="main"
         :type="main"
         size="big"
+        :active="mainActive"
         @click="onMainClick" />
     </div>
     <div>
@@ -28,7 +29,8 @@ export default {
   props: {
     left: { type: String },
     main: { type: String },
-    right: { type: String }
+    right: { type: String },
+    mainActive: { type: Boolean }
   },
   components: {
     RemoteButton

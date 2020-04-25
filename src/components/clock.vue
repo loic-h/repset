@@ -32,6 +32,10 @@ export default {
   },
   methods: {
     update() {
+      if (this.startTime === null) {
+        this.time = 0;
+        return;
+      }
       this.time = Date.now() - this.startTime + this.offsetTime;
       if (this.active) {
         requestAnimationFrame(this.update);
@@ -49,6 +53,9 @@ export default {
         }
       },
       immediate: true
+    },
+    startTime() {
+      this.update();
     }
   }
 };

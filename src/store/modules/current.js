@@ -1,6 +1,6 @@
 const state = {
   id: null,
-  startTime: 0,
+  startTime: null,
   offsetTime: 0,
   running: false
 };
@@ -22,9 +22,10 @@ const mutations = {
     state.running = false;
   },
   stop(state) {
-    state.id = null;
-    state.time = null;
+    state.startTime = null;
+    state.offsetTime = 0;
     state.running = false;
+    state.id = null;
   }
 };
 

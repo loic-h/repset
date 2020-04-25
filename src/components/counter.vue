@@ -34,9 +34,17 @@ export default {
   data() {
     return {
       minutes: Math.floor(this.time / 60),
-      seconds: this.time % 60,
-      prettySeconds: prettifyTime(this.time % 60)
+      seconds: this.time % 60
     };
+  },
+  watch: {
+    time(value) {
+      this.minutes = Math.floor(this.time / 60);
+      this.seconds = this.time % 60;
+    },
+    seconds(value) {
+      this.prettySeconds = prettifyTime(value);
+    }
   },
   methods: {
     onMinutesChange(value) {
@@ -57,7 +65,7 @@ export default {
 };
 
 const prettifyTime = time => {
-  return `0${time}`.slice(-2);
+  return `00${time}`.slice(-2);
 };
 </script>
 

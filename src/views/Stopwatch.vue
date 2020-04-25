@@ -4,7 +4,7 @@
     <main-content>
       <clock
         class="clock"
-        :active="clockActive"
+        :active="isRunning"
         :start-time="$store.state.current.startTime"
         :offset-time="$store.state.current.offsetTime" />
     </main-content>
@@ -12,7 +12,9 @@
       main="play"
       @main-click="onPlayClick"
       right="more"
-      @right-click="onMoreClick" />
+      @right-click="onMoreClick"
+      left="reset"
+      @left-click="onReplayClick" />
   </div>
 </template>
 
@@ -35,11 +37,8 @@ export default {
     currentId() {
       return this.$store.state.current.id;
     },
-    isCurrentRunning() {
-      return this.$store.state.current.running;
-    },
-    clockActive() {
-      return this.currentId === ID && this.isCurrentRunning;
+    isRunning() {
+      return this.currentId === ID && this.$store.state.current.running;
     }
   },
   methods: {
@@ -51,7 +50,10 @@ export default {
       }
     },
     onMoreClick() {
-      this.$router.push("/list");
+      this.$router.push("/workouts");
+    },
+    onReplayClick() {
+      this.$store.commit("current/stop");
     }
   }
 };
