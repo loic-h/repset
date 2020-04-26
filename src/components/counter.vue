@@ -9,13 +9,13 @@
         @input="onMinutesChange" />
       :
       <input-number
-        :value="prettySeconds"
+        :value.sync="prettySeconds"
         :edit="edit"
         @blur="onSecondsBlur"
         @input="onSecondsChange" />
     </div>
     <span v-else>
-      {{ minutes }}:{{ seconds }}
+      {{ minutes }}:{{ prettySeconds }}
     </span>
   </div>
 </template>
@@ -34,13 +34,20 @@ export default {
   data() {
     return {
       minutes: Math.floor(this.time / 60),
-      seconds: this.time % 60
+      seconds: this.time % 60,
+      prettySeconds: null
     };
   },
   watch: {
     time(value) {
       this.minutes = Math.floor(this.time / 60);
       this.seconds = this.time % 60;
+    },
+    seconds: {
+      handler(value) {
+        this.prettySeconds = prettifyTime(value);
+      },
+      immediate: true
     }
   },
   methods: {
@@ -57,11 +64,6 @@ export default {
     },
     getTime() {
       return parseInt(this.minutes) * 60 + parseInt(this.seconds) ;
-    }
-  },
-  computed: {
-    prettySeconds() {
-      return prettifyTime(this.seconds);
     }
   }
 };

@@ -33,8 +33,11 @@ export default {
     },
     onBlur() {
       this.$emit("blur")
-    }
+    },
   },
+    mounted() {
+console.log("moutned")
+    },
   watch: {
     value:{
       handler(value) {
