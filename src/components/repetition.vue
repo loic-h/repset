@@ -66,6 +66,7 @@ export default {
 .repetition {
   position: relative;
   padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
   border-radius: var(--span-border-radius);
   background: var(--span-backgound);
 }

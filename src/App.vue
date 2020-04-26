@@ -30,5 +30,7 @@ export default {};
   height: 100%;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 </style>

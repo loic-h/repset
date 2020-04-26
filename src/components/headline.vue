@@ -34,13 +34,15 @@ export default {
 
 <style scoped>
 .headline {
-  position: absolute;
+  position: sticky;
   top: 0;
   display: flex;
   width: 100%;
   justify-content: center;
   padding: var(--space);
   box-sizing: border-box;
+  z-index: 1;
+  background-color: var(--white);
 }
 
 .input {

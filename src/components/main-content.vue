@@ -20,14 +20,7 @@ export default {
 <style scoped>
 .main-content {
   display: flex;
-  height: 100%;
-  width: 100%;
+  flex-grow: 1;
   box-sizing: border-box;
-  padding-bottom: var(--content-bottom-padding);
 }
-
-.main-content:not(.no-top-padding) {
-  padding-top: var(--content-top-padding);
-}
-
 </style>

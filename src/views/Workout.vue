@@ -22,21 +22,24 @@
             class="repetition" />
         </div>
       </main-content>
-      <remote
-        v-slot:remote
-        left="back"
-        @left-click="onBackClick"
-        main="play"
-        :main-active="isCurrent"
-        @main-click="onPlayClick"
-        right="delete"
-        @right-click="onDeleteClick" />
+      <actions>
+        <action
+          label="Back"
+          :handler="onBackClick" />
+        <action
+          label="Play"
+          :handler="onPlayClick" />
+        <action
+          label="Delete"
+          :handler="onDeleteClick" />
+      </actions>
     </template>
   </div>
 </template>
 
 <script>
-import Remote from "@/components/remote";
+import Actions from "@/components/actions";
+import Action from "@/components/action";
 import Headline from "@/components/headline";
 import Repetition from "@/components/repetition";
 import MainContent from "@/components/main-content";
@@ -64,10 +67,11 @@ export default {
     }
   },
   components: {
-    Remote,
     Headline,
     Repetition,
-    MainContent
+    MainContent,
+    Actions,
+    Action
   },
   methods: {
     onHeadlineChange(value) {
@@ -112,15 +116,13 @@ export default {
 .workout {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  flex-grow: 1;
 }
 
 .repetitions {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
   justify-content: flex-end;
 }
 </style>

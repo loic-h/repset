@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 nav {
-  position: absolute;
+  position: sticky;
   top: 0;
   display: flex;
   width: 100%;

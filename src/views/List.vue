@@ -5,25 +5,29 @@
         class="link-list"
         :items="linkList" />
     </main-content>
-    <remote
-      v-slot:remote
-      left="back"
-      @left-click="onMenuBackClick"
-      main="add"
-      @main-click="onAddClick" />
+    <actions>
+      <action
+        label="Back"
+        :handler="onMenuBackClick" />
+      <action
+        label="Add"
+        :handler="onAddClick" />
+    </actions>
   </div>
 </template>
 
 <script>
-import Remote from "@/components/remote";
+import Actions from "@/components/actions";
+import Action from "@/components/action";
 import LinkList from "@/components/link-list";
 import MainContent from "@/components/main-content";
 
 export default {
   components: {
-    Remote,
     LinkList,
-    MainContent
+    MainContent,
+    Actions,
+    Action
   },
   computed: {
     linkList() {
@@ -58,7 +62,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  flex-grow: 1;
 }
 
 .link-list {

@@ -8,21 +8,31 @@
         :start-time="$store.state.current.startTime"
         :offset-time="$store.state.current.offsetTime" />
     </main-content>
-    <remote
-      main="play"
-      @main-click="onPlayClick"
-      right="more"
-      @right-click="onMoreClick"
-      left="reset"
-      @left-click="onReplayClick" />
+    <actions>
+      <action
+        label="Reset"
+        :handler="onResetClick" />
+      <action
+        v-if="isRunning"
+        label="Pause"
+        :handler="onPauseClick" />
+      <action
+        v-else
+        label="Play"
+        :handler="onPlayClick" />
+      <action
+        label="Menu"
+        :handler="onMenuClick" />
+    </actions>
   </div>
 </template>
 
 <script>
 import Navigation from "@/components/navigation";
 import Clock from "@/components/clock";
-import Remote from "@/components/remote";
 import MainContent from "@/components/main-content";
+import Actions from "@/components/actions";
+import Action from "@/components/action";
 
 const ID = "stopwatch";
 
@@ -30,7 +40,8 @@ export default {
   components: {
     Navigation,
     Clock,
-    Remote,
+    Actions,
+    Action,
     MainContent
   },
   computed: {
@@ -43,16 +54,15 @@ export default {
   },
   methods: {
     onPlayClick(isActive) {
-      if (isActive) {
-        this.$store.commit("current/start", ID);
-      } else {
-        this.$store.commit("current/pause");
-      }
+      this.$store.commit("current/start", ID);
     },
-    onMoreClick() {
+    onPauseClick(isActive) {
+      this.$store.commit("current/pause", ID);
+    },
+    onMenuClick() {
       this.$router.push("/workouts");
     },
-    onReplayClick() {
+    onResetClick() {
       this.$store.commit("current/stop");
     }
   }
@@ -61,8 +71,10 @@ export default {
 
 <style>
 .stopwatch {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+  flex-grow: 1;
 }
 
 .clock {

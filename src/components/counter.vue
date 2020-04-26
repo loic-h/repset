@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       minutes: Math.floor(this.time / 60),
-      seconds: this.time % 60
+      seconds: this.time % 60,
     };
   },
   watch: {
@@ -60,6 +60,11 @@ export default {
     },
     getTime() {
       return parseInt(this.minutes) * 60 + parseInt(this.seconds) ;
+    }
+  },
+  computed: {
+    prettySeconds() {
+      return prettifyTime(this.seconds);
     }
   }
 };
