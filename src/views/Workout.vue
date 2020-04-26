@@ -32,6 +32,9 @@
         <action
           label="Delete"
           :handler="onDeleteClick" />
+        <action
+          label="Add"
+          :handler="onAddClick" />
       </actions>
     </template>
   </div>
@@ -89,6 +92,9 @@ export default {
     onDeleteClick() {
       this.$store.commit("workouts/delete", this.id);
       this.$router.push("/workouts");
+    },
+    onAddClick() {
+      this.$store.commit("workouts/addRepetition", this.id);
     },
     onRepetitionChange(payload, index) {
       const repetitions = [...this.item.repetitions];

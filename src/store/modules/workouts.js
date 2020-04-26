@@ -27,7 +27,7 @@ const getters = {
 };
 
 const mutations = {
-  add(state, payload) {
+  create(state, payload) {
     const {
       id,
       label
@@ -51,13 +51,23 @@ const mutations = {
       ...item,
       ...payload.params
     };
+  },
+  addRepetition(state, id) {
+    const item = { ...state.sets[id] };
+    state.sets[id] = {
+      ...item,
+      repetitions: [
+        ...item.repetitions,
+        DEFAULT_REPETITION
+      ]
+    };
   }
 };
 
 const actions = {
   create({ commit }, payload) {
     const id = UID();
-    commit('add', { ...payload, id });
+    commit('create', { ...payload, id });
     return id;
   }
 };
