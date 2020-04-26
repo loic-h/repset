@@ -38,7 +38,7 @@ export default {
         },
         ...this.$store.getters["workouts/sets"].map(set => ({
           ...set,
-          path: `/workouts/${set.id}/edit`
+          path: `/workouts/${set.id}`
         }))
       ];
       return list;

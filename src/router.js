@@ -3,7 +3,8 @@ import Router from "vue-router";
 import store from "./store";
 import Stopwatch from "@/views/Stopwatch";
 import List from "@/views/List";
-import Workout from "@/views/Workout";
+import Detail from "@/views/workout/Detail";
+import Run from "@/views/workout/Run";
 
 Vue.use(Router);
 
@@ -22,14 +23,11 @@ export default new Router({
     },
     {
       path: "/workouts/:id",
-      component: Workout
+      component: Detail
     },
     {
-      path: "/workouts/:id/edit",
-      component: Workout,
-      props: {
-        edit: true
-      }
+      path: "/workouts/:id/run",
+      component: Run
     },
     {
       path: "/create",

@@ -1,18 +1,12 @@
 <template>
-  <div class="workout">
+  <div class="workout-detail">
     <template v-if="item">
       <headline
         :value="item.label"
         @change="onHeadlineChange"
         :edit="edit" />
       <main-content>
-        <div
-          v-if="isCurrent">
-          yo
-        </div>
-        <div
-          v-else
-          class="repetitions">
+        <div class="repetitions">
           <repetition
             :key="index"
             :index="index"
@@ -28,8 +22,8 @@
           label="Back"
           :handler="onBackClick" />
         <action
-          label="Play"
-          :handler="onPlayClick" />
+          label="Run"
+          :handler="onRunClick" />
         <action
           label="Delete"
           :handler="onDeleteClick" />
@@ -49,9 +43,6 @@ import Repetition from "@/components/repetition";
 import MainContent from "@/components/main-content";
 
 export default {
-  props: {
-    edit: { type: Boolean, default: false }
-  },
   computed: {
     id() {
       return this.$route.params.id;
@@ -62,12 +53,6 @@ export default {
         return { ...item };
       }
       return null;
-    },
-    isCurrent() {
-      return this.$store.state.current.id === this.id;
-    },
-    isRunning() {
-      return this.isCurrent && this.$store.state.running;
     }
   },
   components: {
@@ -87,8 +72,8 @@ export default {
     onBackClick() {
       this.$router.go(-1);
     },
-    onPlayClick() {
-      this.$store.commit(`current/${this.isRunning ? "pause" : "start"}`, this.id);
+    onRunClick() {
+      this.$router.push(`/workouts/${this.id}/run`);
     },
     onDeleteClick() {
       this.$store.commit("workouts/delete", this.id);
@@ -126,7 +111,7 @@ export default {
 </script>
 
 <style scoped>
-.workout {
+.workout-detail {
   display: flex;
   flex-direction: column;
   flex-grow: 1;

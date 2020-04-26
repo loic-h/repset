@@ -9,7 +9,7 @@
         @input="onMinutesChange" />
       :
       <input-number
-        :value.sync="prettySeconds"
+        :value="prettySeconds"
         :edit="edit"
         @blur="onSecondsBlur"
         @input="onSecondsChange" />
@@ -34,16 +34,13 @@ export default {
   data() {
     return {
       minutes: Math.floor(this.time / 60),
-      seconds: this.time % 60,
+      seconds: this.time % 60
     };
   },
   watch: {
     time(value) {
       this.minutes = Math.floor(this.time / 60);
       this.seconds = this.time % 60;
-    },
-    seconds(value) {
-      this.prettySeconds = prettifyTime(value);
     }
   },
   methods: {

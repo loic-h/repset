@@ -5,8 +5,8 @@
       <clock
         class="clock"
         :active="isRunning"
-        :start-time="$store.state.current.startTime"
-        :offset-time="$store.state.current.offsetTime" />
+        :start-time="startTime"
+        :offset-time="offsetTime" />
     </main-content>
     <actions>
       <action
@@ -45,25 +45,29 @@ export default {
     MainContent
   },
   computed: {
-    currentId() {
-      return this.$store.state.current.id;
-    },
     isRunning() {
-      return this.currentId === ID && this.$store.state.current.running;
+      const run = this.$store.state.timers.items[ID]
+      return run && run.running;
+    },
+    startTime() {
+      return this.$store.state.timers.items[ID].startTime;
+    },
+    offsetTime() {
+      return this.$store.state.timers.items[ID].offsetTime;
     }
   },
   methods: {
     onPlayClick(isActive) {
-      this.$store.commit("current/start", ID);
+      this.$store.commit("timers/run", ID);
     },
     onPauseClick(isActive) {
-      this.$store.commit("current/pause", ID);
+      this.$store.commit("timers/pause", ID);
     },
     onMenuClick() {
       this.$router.push("/workouts");
     },
     onResetClick() {
-      this.$store.commit("current/stop");
+      this.$store.commit("timers/stop", ID);
     }
   }
 };

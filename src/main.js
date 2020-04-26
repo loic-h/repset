@@ -16,5 +16,5 @@ new Vue({
 });
 
 if (router.currentRoute.path === "/") {
-  router.replace("/stopwatch");
+  router.replace("/workouts");
 }

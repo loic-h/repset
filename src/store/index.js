@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import current from "./modules/current";
+import timers from "./modules/timers";
 import workouts from "./modules/workouts";
 
 Vue.use(Vuex);
@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [createPersistedState()],
   modules: {
-    current,
+    timers,
     workouts
   },
   strict: true
