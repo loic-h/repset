@@ -23,6 +23,13 @@
         :edit="true"
         @input="onRepeatUpdate" />
     </span>
+    <ul class="actions">
+      <li>
+        <button @click="onDeleteClick">
+          Delete
+        </button>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -57,6 +64,9 @@ export default {
         repeat: parseInt(value),
         items: this.items
       }, this.index);
+    },
+    onDeleteClick() {
+      this.$emit("delete", this.index);
     }
   }
 };

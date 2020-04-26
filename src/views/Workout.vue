@@ -19,6 +19,7 @@
             v-for="(item, index) in item.repetitions"
             v-bind="item"
             @change="onRepetitionChange"
+            @delete="onRepetitionDelete"
             class="repetition" />
         </div>
       </main-content>
@@ -102,6 +103,12 @@ export default {
       this.$store.commit("workouts/update", {
         id: this.id,
         params: { repetitions }
+      });
+    },
+    onRepetitionDelete(index) {
+      this.$store.commit("workouts/deleteRepetition", {
+        id: this.id,
+        index
       });
     }
   },

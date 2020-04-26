@@ -61,6 +61,14 @@ const mutations = {
         DEFAULT_REPETITION
       ]
     };
+  },
+  deleteRepetition(state, payload) {
+    const item = { ...state.sets[payload.id] };
+    item.repetitions.splice(payload.index, 1);
+    state.sets[payload.id] = {
+      ...item,
+      repetitions: item.repetitions
+    };
   }
 };
 
