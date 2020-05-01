@@ -67,6 +67,9 @@ export default {
         this.timeOffinishedSets = time * 1000;
       },
       immediate: true
+    },
+    startTime(value) {
+      this.update();
     }
   },
   methods: {

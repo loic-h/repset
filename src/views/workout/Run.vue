@@ -16,6 +16,9 @@
       </main-content>
       <actions>
         <action
+          label="Back"
+          :handler="onBackClick" />
+        <action
           label="Reset"
           :handler="onResetClick" />
         <action
@@ -74,7 +77,6 @@ export default {
     timer() {
       return this.$store.getters["timers/getTimerById"](this.id);
     },
-
     isRunning() {
       return this.timer.running;
     }
@@ -89,6 +91,9 @@ export default {
     onResetClick() {
       this.done = false;
       this.$store.dispatch("timers/stop", this.id);
+    },
+    onBackClick() {
+      this.$router.push("/workouts");
     },
     onDone() {
       this.done = true;

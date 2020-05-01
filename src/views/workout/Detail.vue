@@ -42,6 +42,13 @@ import Repetition from "@/components/repetition";
 import MainContent from "@/components/main-content";
 
 export default {
+  components: {
+    Headline,
+    Repetition,
+    MainContent,
+    Actions,
+    Action
+  },
   computed: {
     id() {
       return this.$route.params.id;
@@ -52,14 +59,33 @@ export default {
         return { ...item };
       }
       return null;
+    },
+    timer() {
+      return this.$store.getters["timers/getTimerById"](this.id);
+    },
+    isRunning() {
+      return this.timer.running;
     }
   },
-  components: {
-    Headline,
-    Repetition,
-    MainContent,
-    Actions,
-    Action
+  watch: {
+    item: {
+      handler(newValue) {
+        if (!newValue) {
+          this.$router.push("/workouts");
+          return;
+        }
+      },
+      immediate: true
+    },
+    isRunning: {
+      handler(value) {
+        if (value) {
+          this.$router.push(`/workouts/${this.id}/run`);
+          return;
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     onHeadlineChange(value) {
@@ -94,16 +120,6 @@ export default {
         id: this.id,
         index
       });
-    }
-  },
-  watch: {
-    item: {
-      handler(newValue) {
-        if (!newValue) {
-          this.$router.push("/workouts");
-        }
-      },
-      immediate: true
     }
   }
 }
