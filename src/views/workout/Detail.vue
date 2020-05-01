@@ -3,8 +3,7 @@
     <template v-if="item">
       <headline
         :value="item.label"
-        @change="onHeadlineChange"
-        :edit="edit" />
+        @change="onHeadlineChange" />
       <main-content>
         <div class="repetitions">
           <repetition

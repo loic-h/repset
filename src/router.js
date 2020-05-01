@@ -33,7 +33,7 @@ export default new Router({
       path: "/create",
       beforeEnter: (to, from, next) => {
         store.dispatch("workouts/create", { label: "New Workout" })
-          .then(id => next(`/workouts/${id}/edit`));
+          .then(id => next(`/workouts/${id}`));
       }
     }
   ],

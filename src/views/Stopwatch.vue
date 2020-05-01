@@ -29,7 +29,7 @@
 
 <script>
 import Navigation from "@/components/navigation";
-import Clock from "@/components/clock";
+import Clock from "@/components/clocks/stopwatch";
 import MainContent from "@/components/main-content";
 import Actions from "@/components/actions";
 import Action from "@/components/action";
@@ -45,35 +45,40 @@ export default {
     MainContent
   },
   computed: {
+    timer() {
+      return this.$store.getters["timers/getTimerById"](ID);
+    },
     isRunning() {
-      const run = this.$store.state.timers.items[ID]
-      return run && run.running;
+      return this.timer.running;
     },
     startTime() {
-      return this.$store.state.timers.items[ID].startTime;
+      return this.timer.startTime;
     },
     offsetTime() {
-      return this.$store.state.timers.items[ID].offsetTime;
+      return this.timer.offsetTime;
     }
   },
   methods: {
     onPlayClick(isActive) {
-      this.$store.commit("timers/run", ID);
+      this.$store.dispatch("timers/run", ID);
     },
     onPauseClick(isActive) {
-      this.$store.commit("timers/pause", ID);
+      this.$store.dispatch("timers/pause", ID);
     },
     onMenuClick() {
       this.$router.push("/workouts");
     },
     onResetClick() {
-      this.$store.commit("timers/stop", ID);
+      this.$store.dispatch("timers/stop", ID);
     }
+  },
+  created() {
+    this.$store.dispatch("timers/create", ID);
   }
 };
 </script>
 
-<style>
+<style scoped>
 .stopwatch {
   display: flex;
   flex-direction: column;

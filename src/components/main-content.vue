@@ -20,6 +20,7 @@ export default {
 <style scoped>
 .main-content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   box-sizing: border-box;
 }

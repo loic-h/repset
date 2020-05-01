@@ -23,6 +23,9 @@ const getters = {
       id,
       ...state.sets[id]
     }));
+  },
+  getSetById: state => id => {
+    return state.sets[id];
   }
 };
 

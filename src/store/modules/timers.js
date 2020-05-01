@@ -1,43 +1,87 @@
-const state = {
-  items: {
-    stopwatch: {
-      startTime: null,
-      offsetTime: 0,
-      running: false
+const startPayload = {
+  startTime: null,
+  offsetTime: 0,
+  running: false
+}
+
+const state = [];
+
+const getters = {
+  getTimerById: state => id => {
+    return state.find(item => item.id === id);
+  },
+  getIndexById: state => id => {
+    return state.findIndex(item => item.id === id);
+  },
+  getTimerTime: (state, getters) => id => {
+    const timer = getters.getTimerById(id);
+    if (!timer || !timer.startTime) {
+      return 0;
     }
+    if (timer.running) {
+      return timer.offsetTime + Date.now() - timer.startTime;
+    }
+    return timer.offsetTime;
+  },
+  isRunning: (state, getters) => id => {
+    const timer = getters.getTimerById(id);
+    if (timer) {
+      return timer.running;
+    }
+    return false;
   }
 };
 
-const getters = {};
-
-const actions = {};
-
 const mutations = {
-  run(state, id) {
-    state.items[id] = {
-      startTime:  Date.now(),
-      offsetTime: state.items[id] && state.items[id].offsetTime || 0,
+  create(state, id) {
+    state.push({
+      ...startPayload,
+      id
+    });
+  },
+  run(state, index) {
+    state.splice(index, 1, {
+      ...state[index],
+      startTime: Date.now(),
       running: true
-    };
+    });
   },
-  pause(state, id) {
+  pause(state, index) {
     const now = Date.now();
-    const run = state.items[id];
-    if (!run) {
-      return;
-    }
-    state.items[id] = {
-      startTime:  now,
-      offsetTime: run.offsetTime + now - run.startTime,
+    state.splice(index, 1, {
+      ...state[index],
+      startTime: now,
+      offsetTime: state[index].offsetTime + now - state[index].startTime,
       running: false
-    };
+    });
   },
-  stop(state, id) {
-    state.items[id] = {
+  stop(state, index) {
+    state.splice(index, 1, {
+      ...state[index],
       startTime: null,
       offsetTime: 0,
       running: false
-    };
+    });
+  }
+};
+
+const actions = {
+  create({ commit, getters }, id) {
+    if (getters.getIndexById(id) < 0) {
+      commit("create", id);
+    }
+  },
+  run({ commit, dispatch, getters }, id) {
+    dispatch("create", id);
+    commit("run", getters.getIndexById(id));
+  },
+  pause({ commit, dispatch, getters }, id) {
+    dispatch("create", id);
+    commit("pause", getters.getIndexById(id));
+  },
+  stop({ commit, dispatch, getters }, id) {
+    dispatch("create", id);
+    commit("stop", getters.getIndexById(id));
   }
 };
 

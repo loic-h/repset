@@ -2,18 +2,25 @@
   <div class="workout-run">
     <template v-if="item">
       <headline :value="item.label" />
-      <main-content>
-
+      <main-content class="content">
+        <clock
+          :sets="sets"
+          :active="isRunning"
+          :start-time="timer.startTime"
+          :offset-time="timer.offsetTime" />
       </main-content>
       <actions>
         <action
+          label="Reset"
+          :handler="onResetClick" />
+        <action
           v-if="isRunning"
-          label="Play"
-          :handler="onPlayClick" />
+          label="Pause"
+          :handler="onPauseClick" />
         <action
           v-else
-          label="Pause"
-          :handler="onPlayClick" />
+          label="Start"
+          :handler="onStartClick" />
       </actions>
     </template>
   </div>
@@ -24,36 +31,59 @@ import Actions from "@/components/actions";
 import Action from "@/components/action";
 import Headline from "@/components/headline";
 import MainContent from "@/components/main-content";
+import Clock from "@/components/clocks/run";
 
 export default {
+  components: {
+    Headline,
+    MainContent,
+    Actions,
+    Action,
+    Clock
+  },
+  data() {
+    return {
+      time: 0,
+      passedTime: 0
+    }
+  },
   computed: {
     id() {
       return this.$route.params.id;
     },
     item() {
-      const item = this.$store.state.workouts.sets[this.id];
-      if (item) {
-        return { ...item };
-      }
-      return null;
+      return this.$store.getters["workouts/getSetById"](this.id);
     },
+    sets() {
+      const sets = [];
+      for (let repetition of this.item.repetitions) {
+        for (let _ of new Array(repetition.repeat)) {
+          for (let item of repetition.items) {
+            sets.push(item);
+          }
+        }
+      }
+      return sets;
+    },
+    timer() {
+      return this.$store.getters["timers/getTimerById"](this.id);
+    },
+
     isRunning() {
-      return this.$store.state.current.id === this.id;
+      return this.timer.running;
     }
-  },
-  components: {
-    Headline,
-    MainContent,
-    Actions,
-    Action
   },
   methods: {
-    onPlayClick() {
-      this.$store.commit("current/play", this.id);
+    onStartClick() {
+      this.$store.dispatch("timers/run", this.id);
     },
     onPauseClick() {
-      this.$store.commit("current/pause", this.id);
-    }
+      this.$store.dispatch("timers/pause", this.id);
+    },
+    onResetClick() {
+      this.$store.dispatch("timers/stop", this.id);
+    },
+
   },
   watch: {
     item: {
@@ -64,21 +94,22 @@ export default {
       },
       immediate: true
     }
+  },
+  created() {
+    this.$store.dispatch("timers/create", this.id);
   }
 }
 </script>
 
 <style scoped>
-.workout-detail {
+.workout-run {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.repetitions {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: flex-end;
+.content {
+  align-items: center;
+  justify-content: center;
 }
 </style>

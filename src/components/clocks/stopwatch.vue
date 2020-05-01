@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Counter from "./counter";
+import Counter from "@/components/counter";
 
 export default {
   limit: 59 * 60 + 59,
@@ -36,9 +36,11 @@ export default {
         this.time = 0;
         return;
       }
-      this.time = Date.now() - this.startTime + this.offsetTime;
       if (this.active) {
+        this.time = Date.now() - this.startTime + this.offsetTime;
         requestAnimationFrame(this.update);
+      } else {
+        this.time = this.offsetTime;
       }
     }
   },
@@ -54,8 +56,11 @@ export default {
       },
       immediate: true
     },
-    startTime() {
-      this.update();
+    startTime: {
+      handler() {
+        this.update();
+      },
+      immediate: true
     }
   }
 };
