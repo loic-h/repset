@@ -28,7 +28,8 @@ export default {
     return {
       time: 0,
       currentSetIndex: 0,
-      passedTime: 0
+      passedTime: 0,
+      timeOffinishedSets: 0
     }
   },
   computed: {
@@ -45,7 +46,9 @@ export default {
   watch: {
     active: {
       handler(value) {
-        this.update();
+        this.$nextTick(() => {
+          this.update();
+        });
       },
       immediate: true
     },
@@ -65,8 +68,7 @@ export default {
           return time + set.duration;
         }, 0);
         this.timeOffinishedSets = time * 1000;
-      },
-      immediate: true
+      }
     },
     startTime(value) {
       this.update();
