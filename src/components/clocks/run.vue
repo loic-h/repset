@@ -40,7 +40,7 @@ export default {
       return this.currentSet ? this.currentSet.duration * 1000 : 0;
     },
     timeInSeconds() {
-      return parseInt(this.time / 1000);
+      return Math.ceil(this.time / 1000);
     }
   },
   watch: {
@@ -57,7 +57,7 @@ export default {
         let time = 0;
         this.currentSetIndex = this.sets.findIndex(set => {
           time += set.duration;
-          return parseInt(value/1000) < time;
+          return Math.floor(value / 1000) < time;
         });
       },
       immediate: true
@@ -91,7 +91,7 @@ export default {
       } else {
         this.passedTime = this.offsetTime;
       }
-      this.time = Math.ceil(this.currentSetDuration - this.passedTime + this.timeOffinishedSets + 1000);
+      this.time = this.currentSetDuration - this.passedTime + this.timeOffinishedSets;
     }
   }
 };

@@ -29,6 +29,13 @@ const getters = {
       return timer.running;
     }
     return false;
+  },
+  isReset: (state, getters) => id => {
+    const timer = getters.getTimerById(id);
+    if (timer) {
+      return !timer.startTime && !timer.running;
+    }
+    return true;
   }
 };
 

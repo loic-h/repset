@@ -3,9 +3,18 @@
     <template v-if="item">
       <headline :value="item.label" />
       <main-content class="content">
-        <h2 v-if="done">
+        <countdown
+          v-if="inCountdown"
+          :active="isCountdownRunning"
+          @done="onCountdownDone" />
+        <h2 v-else-if="done">
           DONE!
         </h2>
+        <button
+          v-else-if="isReset"
+          @click="onStartClick">
+          START
+        </button>
         <clock
           v-else
           :sets="sets"
@@ -22,7 +31,7 @@
           label="Reset"
           :handler="onResetClick" />
         <action
-          v-if="isRunning"
+          v-if="isRunning || isCountdownRunning"
           label="Pause"
           :handler="onPauseClick" />
         <action
@@ -40,6 +49,7 @@ import Action from "@/components/action";
 import Headline from "@/components/headline";
 import MainContent from "@/components/main-content";
 import Clock from "@/components/clocks/run";
+import Countdown from "@/components/clocks/countdown";
 
 export default {
   components: {
@@ -47,13 +57,16 @@ export default {
     MainContent,
     Actions,
     Action,
-    Clock
+    Clock,
+    Countdown
   },
   data() {
     return {
       time: 0,
       passedTime: 0,
-      done: false
+      done: false,
+      inCountdown: false,
+      isCountdownRunning: false
     }
   },
   computed: {
@@ -78,15 +91,27 @@ export default {
       return this.$store.getters["timers/getTimerById"](this.id);
     },
     isRunning() {
-      return this.timer.running;
+      return this.$store.getters["timers/isRunning"](this.id);
+    },
+    isReset() {
+      return this.$store.getters["timers/isReset"](this.id);
     }
   },
   methods: {
     onStartClick() {
-      this.$store.dispatch("timers/run", this.id);
+      if (this.isReset) {
+        this.inCountdown = true;
+        this.isCountdownRunning = true;
+      } else {
+        this.$store.dispatch("timers/run", this.id);
+      }
     },
     onPauseClick() {
-      this.$store.dispatch("timers/pause", this.id);
+      if (this.isReset) {
+        this.isCountdownRunning = false;
+      } else {
+        this.$store.dispatch("timers/pause", this.id);
+      }
     },
     onResetClick() {
       this.done = false;
@@ -98,6 +123,10 @@ export default {
     onDone() {
       this.done = true;
       this.$store.dispatch("timers/stop", this.id);
+    },
+    onCountdownDone() {
+      this.inCountdown = false;
+      this.$store.dispatch("timers/run", this.id);
     }
   },
   watch: {

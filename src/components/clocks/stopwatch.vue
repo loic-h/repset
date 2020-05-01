@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     timeInSeconds() {
-      return parseInt(this.time / 1000);
+      return Math.ceil(this.time / 1000);
     }
   },
   components: {
