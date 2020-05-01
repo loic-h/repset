@@ -1,9 +1,13 @@
 <template>
-  <div class="clock">
+  <div
+    v-if="currentSet"
+    class="clock">
     <h2 class="label">
       {{ currentSet.label }}
     </h2>
-    <counter :time="timeInSeconds" />
+    <counter
+      class="counter"
+      :time="timeInSeconds" />
   </div>
 </template>
 
@@ -32,7 +36,7 @@ export default {
       return this.sets[this.currentSetIndex];
     },
     currentSetDuration() {
-      return this.currentSet.duration * 1000;
+      return this.currentSet ? this.currentSet.duration * 1000 : 0;
     },
     timeInSeconds() {
       return parseInt(this.time / 1000);
@@ -71,6 +75,11 @@ export default {
         this.time = this.currentSetDuration;
         return;
       }
+      if (this.currentSetIndex < 0) {
+          this.time = 0;
+          this.$emit("done");
+          return;
+        }
       if (this.active) {
         this.passedTime = Date.now() - this.startTime + this.offsetTime;
         requestAnimationFrame(this.update);
@@ -85,11 +94,10 @@ export default {
 
 <style scoped>
 .clock {
-  font-size: var(--font-size-clock);
+  text-align: center;
 }
 
-.label {
-  font-size: inherit;
-  text-align: center;
+.counter {
+  font-size: var(--font-size-clock);
 }
 </style>

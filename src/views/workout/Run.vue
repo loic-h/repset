@@ -3,11 +3,16 @@
     <template v-if="item">
       <headline :value="item.label" />
       <main-content class="content">
+        <h2 v-if="done">
+          DONE!
+        </h2>
         <clock
+          v-else
           :sets="sets"
           :active="isRunning"
           :start-time="timer.startTime"
-          :offset-time="timer.offsetTime" />
+          :offset-time="timer.offsetTime"
+          @done="onDone" />
       </main-content>
       <actions>
         <action
@@ -44,7 +49,8 @@ export default {
   data() {
     return {
       time: 0,
-      passedTime: 0
+      passedTime: 0,
+      done: false
     }
   },
   computed: {
@@ -81,9 +87,13 @@ export default {
       this.$store.dispatch("timers/pause", this.id);
     },
     onResetClick() {
+      this.done = false;
       this.$store.dispatch("timers/stop", this.id);
     },
-
+    onDone() {
+      this.done = true;
+      this.$store.dispatch("timers/stop", this.id);
+    }
   },
   watch: {
     item: {
