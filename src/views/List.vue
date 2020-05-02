@@ -7,9 +7,6 @@
     </main-content>
     <actions>
       <action
-        label="Back"
-        :handler="onMenuBackClick" />
-      <action
         label="Add"
         :handler="onAddClick" />
     </actions>
@@ -47,9 +44,6 @@ export default {
   methods: {
     onAddClick() {
       this.$router.push("/create");
-    },
-    onMenuBackClick() {
-      this.$router.go(-1);
     }
   }
 }
