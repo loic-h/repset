@@ -14,7 +14,3 @@ new Vue({
   store,
   render: h => h(App)
 });
-
-if (router.currentRoute.path === "/") {
-  router.replace("/workouts");
-}

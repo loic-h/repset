@@ -2,7 +2,7 @@
   /* Colors */
 
   --white: #ffffff;
-  --black: #5F5757;
+  --black: #222222;
   --grey-light: #F8F8F8;
 
   --bg: var(--white);
@@ -21,10 +21,4 @@
   --font-size-counter: 3rem;
   --font-size-clock: 5rem;
   --font-size-repeat: 1.5rem;
-}
-
-.link {
-  font-style: italic;
-  font-weight: bold;
-  color: var(--nav-link);
 }

@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import store from "./store";
 import Stopwatch from "@/views/Stopwatch";
-import List from "@/views/List";
+import Home from "@/views/Home";
 import Detail from "@/views/workout/Detail";
 import Run from "@/views/workout/Run";
 
@@ -11,15 +11,12 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/"
+      path: "/",
+      component: Home
     },
     {
       path: "/stopwatch",
       component: Stopwatch
-    },
-    {
-      path: "/workouts",
-      component: List
     },
     {
       path: "/workouts/:id",

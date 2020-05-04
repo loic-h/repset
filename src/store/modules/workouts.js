@@ -26,6 +26,16 @@ const getters = {
   },
   getSetById: state => id => {
     return state.sets[id];
+  },
+  getFlatRepetitions: (state, getters) => id => {
+    const item = getters.getSetById(id);
+    let repetitions = [];
+    for(let rep of item.repetitions) {
+      for (let i = 0; i < rep.repeat; i++) {
+        repetitions = repetitions.concat(rep.items);
+      }
+    }
+    return repetitions;
   }
 };
 
