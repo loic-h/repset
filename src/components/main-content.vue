@@ -23,7 +23,5 @@ export default {
   flex-direction: column;
   flex-grow: 1;
   box-sizing: border-box;
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 </style>

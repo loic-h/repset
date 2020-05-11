@@ -1,48 +1,65 @@
 <template>
-  <div class="stopwatch">
-    <navigation />
-    <main-content>
-      <clock
-        class="clock"
-        :active="isRunning"
-        :start-time="startTime"
-        :offset-time="offsetTime" />
-    </main-content>
-    <actions>
-      <action
-        label="Reset"
-        :handler="onResetClick" />
-      <action
-        v-if="isRunning"
-        label="Pause"
-        :handler="onPauseClick" />
-      <action
-        v-else
-        label="Play"
-        :handler="onPlayClick" />
-      <action
-        label="Menu"
-        :handler="onMenuClick" />
-    </actions>
+  <div class="stopwatch container">
+    <div class="section">
+      <div class="header">
+        <button @click="onBackClick">
+          <sprite id="back" />
+        </button>
+        <h2 class="headline">
+          <sprite id="watch-light" />
+        </h2>
+        <button @click="onResetClick">
+          <sprite id="reset" />
+        </button>
+      </div>
+    </div>
+    <div class="section">
+      <main-content class="content">
+        <clock
+          class="clock"
+          :active="isRunning"
+          :start-time="startTime"
+          :offset-time="offsetTime" />
+      </main-content>
+    </div>
+    <div class="section">
+      <actions class="actions">
+        <action
+          v-if="isRunning"
+          :handler="onPauseClick">
+          <sprite id="pause" :modifiers="['big']" />
+        </action>
+        <action
+          v-else
+          :handler="onPlayClick">
+          <sprite id="play" :modifiers="['big']" />
+        </action>
+      </actions>
+    </div>
   </div>
 </template>
 
 <script>
-import Navigation from "@/components/navigation";
 import Clock from "@/components/clocks/stopwatch";
 import MainContent from "@/components/main-content";
 import Actions from "@/components/actions";
 import Action from "@/components/action";
+import Sprite from "@/components/sprite";
+import "../../public/sprites/watch-light.svg";
+import "../../public/sprites/back.svg";
+import "../../public/sprites/reset.svg";
+import "../../public/sprites/play.svg";
+import "../../public/sprites/pause.svg";
 
 const ID = "stopwatch";
 
 export default {
   components: {
-    Navigation,
     Clock,
     Actions,
     Action,
-    MainContent
+    MainContent,
+    Sprite
   },
   computed: {
     timer() {
@@ -70,6 +87,9 @@ export default {
     },
     onResetClick() {
       this.$store.dispatch("timers/stop", ID);
+    },
+    onBackClick() {
+      this.$router.push("/");
     }
   },
   created() {
@@ -84,13 +104,59 @@ export default {
   flex-direction: column;
   width: 100%;
   flex-grow: 1;
+  justify-content: space-around;
+}
+
+.section {
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section:first-child {
+  justify-content: flex-start;
+}
+
+.section:last-child {
+  justify-content: flex-end;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 2rem;
+  box-sizing: border-box;
+}
+
+.headline {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.headline > svg {
+  display: inline-block;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .clock {
-  flex-grow: 1;
   align-self: stretch;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.actions {
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
 }
 </style>

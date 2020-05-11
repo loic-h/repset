@@ -38,9 +38,10 @@ export default {
 .sprite {
   fill: currentColor;
   width: 1.5rem;
+  display: block;
 }
 
 .big {
-  width: 3.75rem;
+  width: 3rem;
 }
 </style>

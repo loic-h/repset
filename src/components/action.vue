@@ -1,7 +1,10 @@
 <template>
   <li class="action">
     <button @click="handler">
+      <template v-if="label">
       {{ label }}
+      </template>
+      <slot else />
     </button>
   </li>
 </template>
