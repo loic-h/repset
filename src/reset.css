@@ -8,6 +8,10 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
   font-size: 1rem;
+
+  @supports (font-variation-settings: normal) {
+    html { font-family: 'Inter var', sans-serif; }
+  }
 }
 
 body {
@@ -93,4 +97,37 @@ figure {
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../public/fonts/Inter-Light.woff2?v=3.13") format("woff2");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../public/fonts/Inter-Regular.woff2?v=3.13") format("woff2");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../public/fonts/Inter-Medium.woff2?v=3.13") format("woff2");
+}
+
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url("../public/fonts/Inter-roman.var.woff2?v=3.13") format("woff2");
 }

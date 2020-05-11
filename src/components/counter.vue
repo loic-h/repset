@@ -1,5 +1,5 @@
 <template>
-  <div class="counter">
+  <div class="counter ">
     <div
       class="input"
       v-if="edit">
@@ -14,9 +14,16 @@
         @blur="onSecondsBlur"
         @input="onSecondsChange" />
     </div>
-    <span v-else>
-      {{ minutes }}:{{ prettySeconds }}
-    </span>
+    <div class="display" v-else>
+      <div class="display-main">
+        <span>{{ minutes }}</span>
+        <span :class="{ 'blink': isPlaying }">:</span>
+        <span>{{ prettySeconds }}</span>
+      </div>
+      <span v-if="showCentiseconds" class="centiseconds">
+        {{ centiSeconds }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -29,19 +36,34 @@ export default {
   },
   props: {
     time: { type: [Number, String], default: 0 },
-    edit: { type: Boolean, default: false }
+    edit: { type: Boolean, default: false },
+    isPlaying: { type: Boolean, default: false },
+    showCentiseconds: { type: Boolean, default: false }
   },
   data() {
     return {
-      minutes: Math.floor(this.time / 60),
-      seconds: this.time % 60,
+      minutes: prettifyTime(0),
+      seconds: prettifyTime(0),
       prettySeconds: null
     };
   },
+  computed: {
+    date() {
+      const date = new Date(this.time);
+      console.log(date.getSeconds())
+      return new Date(this.time);
+    },
+    centiSeconds() {
+      return prettifyTime(Math.ceil(this.date.getMilliseconds() / 10));
+    }
+  },
   watch: {
-    time(value) {
-      this.minutes = Math.floor(this.time / 60);
-      this.seconds = this.time % 60;
+    date: {
+      handler(value) {
+        this.minutes = this.date.getMinutes();
+        this.seconds = this.date.getSeconds();
+      },
+      immediate: true
     },
     seconds: {
       handler(value) {
@@ -74,14 +96,40 @@ const prettifyTime = time => {
 </script>
 
 <style scoped>
-.clock {
-  font-size: var(--font-size-counter);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.counter {
+  font-feature-settings: "ss01" 1, "tnum" 1;
+  font-variant-ligatures: contextual common-ligatures;
+  line-height: 1;
 }
 
 input {
   display: inline;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centiseconds {
+  font-size: 0.5em;
+  flex-basis: 100%;
+}
+
+.blink {
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1
+  }
+  50% {
+    opacity: 0
+  }
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div class="clock">
-    <counter :time="timeInSeconds" />
-    <div class="mark"></div>
+    <counter :time="time" :is-playing="active" :show-centiseconds="true" />
   </div>
 </template>
 
@@ -21,11 +20,6 @@ export default {
     return {
       time: 0
     };
-  },
-  computed: {
-    timeInSeconds() {
-      return Math.ceil(this.time / 1000);
-    }
   },
   components: {
     Counter
