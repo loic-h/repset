@@ -1,17 +1,21 @@
 <template>
   <div class="stopwatch container">
     <div class="section">
-      <div class="header">
-        <button @click="onBackClick">
-          <sprite id="back" />
-        </button>
-        <h2 class="headline">
+      <header-vue>
+        <template v-slot:left>
+          <button @click="onBackClick">
+            <sprite id="back" />
+          </button>
+        </template>
+        <template v-slot:headline>
           <sprite id="watch-light" />
-        </h2>
-        <button @click="onResetClick">
-          <sprite id="reset" />
-        </button>
-      </div>
+        </template>
+        <template v-slot:right>
+          <button @click="onResetClick">
+            <sprite id="reset" />
+          </button>
+        </template>
+      </header-vue>
     </div>
     <div class="section">
       <main-content class="content">
@@ -45,6 +49,7 @@ import MainContent from "@/components/main-content";
 import Actions from "@/components/actions";
 import Action from "@/components/action";
 import Sprite from "@/components/sprite";
+import Header from "@/components/header";
 import "../../public/sprites/watch-light.svg";
 import "../../public/sprites/back.svg";
 import "../../public/sprites/reset.svg";
@@ -59,7 +64,8 @@ export default {
     Actions,
     Action,
     MainContent,
-    Sprite
+    Sprite,
+    HeaderVue: Header
   },
   computed: {
     timer() {
@@ -121,23 +127,6 @@ export default {
 
 .section:last-child {
   justify-content: flex-end;
-}
-
-.header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 2rem;
-  box-sizing: border-box;
-}
-
-.headline {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.headline > svg {
-  display: inline-block;
 }
 
 .content {

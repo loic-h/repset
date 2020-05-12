@@ -3,11 +3,11 @@ const DEFAULT_REPETITION = {
   items: [
     {
       label: "WORK!",
-      duration: 180
+      duration: 180000
     },
     {
       label: "REST...",
-      duration: 180
+      duration: 180000
     }
   ]
 };
