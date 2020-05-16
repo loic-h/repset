@@ -1,7 +1,7 @@
 <template>
   <div class="workout-run">
     <template v-if="item">
-      <headline :value="item.label" />
+      <!-- <headline :value="item.label" /> -->
       <main-content class="content">
         <countdown
           v-if="inCountdown"
@@ -46,14 +46,14 @@
 <script>
 import Actions from "@/components/actions";
 import Action from "@/components/action";
-import Headline from "@/components/headline";
+// import Headline from "@/components/headline";
 import MainContent from "@/components/main-content";
 import Clock from "@/components/clocks/run";
 import Countdown from "@/components/clocks/countdown";
 
 export default {
   components: {
-    Headline,
+    // Headline,
     MainContent,
     Actions,
     Action,
@@ -141,6 +141,14 @@ export default {
   },
   created() {
     this.$store.dispatch("timers/create", this.id);
+  },
+  mounted() {
+    if (this.isReset) {
+      this.inCountdown = true;
+      this.isCountdownRunning = true;
+    } else {
+      // this.$store.dispatch("timers/run", this.id);
+    }
   }
 }
 </script>

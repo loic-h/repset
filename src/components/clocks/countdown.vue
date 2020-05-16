@@ -1,7 +1,7 @@
 <template>
   <div class="countdown">
     <h2>GET READY</h2>
-    <counter :time="timeInSeconds" />
+    <counter :time="time" />
   </div>
 </template>
 
@@ -21,11 +21,6 @@ export default {
       time: this.total,
       startTime: null,
       offsetTime: 0
-    }
-  },
-  computed: {
-    timeInSeconds() {
-      return Math.ceil(this.time / 1000);
     }
   },
   watch: {

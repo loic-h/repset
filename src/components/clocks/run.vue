@@ -7,7 +7,7 @@
     </h2>
     <counter
       class="counter"
-      :time="timeInSeconds" />
+      :time="time" />
   </div>
 </template>
 
@@ -37,10 +37,7 @@ export default {
       return this.sets[this.currentSetIndex];
     },
     currentSetDuration() {
-      return this.currentSet ? this.currentSet.duration * 1000 : 0;
-    },
-    timeInSeconds() {
-      return Math.ceil(this.time / 1000);
+      return this.currentSet ? this.currentSet.duration : 0;
     }
   },
   watch: {
@@ -57,7 +54,7 @@ export default {
         let time = 0;
         this.currentSetIndex = this.sets.findIndex(set => {
           time += set.duration;
-          return Math.floor(value / 1000) < time;
+          return value < time;
         });
       },
       immediate: true
@@ -67,7 +64,7 @@ export default {
         const time = this.sets.slice(0, value).reduce((time, set) => {
           return time + set.duration;
         }, 0);
-        this.timeOffinishedSets = time * 1000;
+        this.timeOffinishedSets = time;
       }
     },
     startTime(value) {

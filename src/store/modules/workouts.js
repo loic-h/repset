@@ -71,14 +71,18 @@ const mutations = {
       ...item,
       repetitions: [
         ...item.repetitions,
-        DEFAULT_REPETITION
+        {
+          ...DEFAULT_REPETITION,
+          id: UID()
+        }
       ]
     };
   },
   deleteRepetition(state, payload) {
-    const item = { ...state.sets[payload.id] };
-    item.repetitions.splice(payload.index, 1);
-    state.sets[payload.id] = {
+    const item = { ...state.sets[payload.setId] };
+    const index = item.repetitions.findIndex(a => a.id === payload.id);
+    item.repetitions.splice(index, 1);
+    state.sets[payload.setId] = {
       ...item,
       repetitions: item.repetitions
     };

@@ -46,7 +46,7 @@ export default {
 }
 
 .workout {
-  border-radius: 4px;
+  border-radius: var(--span-border-radius);
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   padding: 1rem;
   overflow: hidden;

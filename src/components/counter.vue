@@ -50,7 +50,6 @@ export default {
   computed: {
     date() {
       const date = new Date(this.time);
-      console.log(date.getSeconds())
       return new Date(this.time);
     },
     centiSeconds() {

@@ -1,35 +1,44 @@
 <template>
-  <div class="workout-detail">
+  <div class="workout-detail container">
     <template v-if="item">
-      <headline
-        :value="item.label"
-        :edit="true"
-        @change="onHeadlineChange" />
-      <main-content>
+      <header-vue>
+        <template v-slot:left>
+          <button @click="onBackClick">
+            <sprite id="back" />
+          </button>
+        </template>
+        <template v-slot:headline>
+          <input-text
+            :value="item.label"
+            :edit="true"
+            @change="onHeadlineChange" />
+        </template>
+        <template v-slot:right>
+          <button @click="onDeleteClick">
+            <sprite id="close" />
+          </button>
+        </template>
+      </header-vue>
+
+      <main-content class="content">
         <div class="repetitions">
           <repetition
-            :key="index"
-            :index="index"
-            v-for="(item, index) in item.repetitions"
+            :key="item.id"
+            v-for="item in item.repetitions"
             v-bind="item"
             @change="onRepetitionChange"
             @delete="onRepetitionDelete"
             class="repetition" />
         </div>
+        <button @click="onAddClick">
+          <sprite id="add" />
+        </button>
       </main-content>
       <actions>
         <action
-          label="Back"
-          :handler="onBackClick" />
-        <action
-          label="Run"
-          :handler="onRunClick" />
-        <action
-          label="Delete"
-          :handler="onDeleteClick" />
-        <action
-          label="Add"
-          :handler="onAddClick" />
+          :handler="onRunClick">
+          <sprite id="play" :modifiers="['big']" />
+        </action>
       </actions>
     </template>
   </div>
@@ -38,17 +47,25 @@
 <script>
 import Actions from "@/components/actions";
 import Action from "@/components/action";
-import Headline from "@/components/headline";
+import InputText from "@/components/input-text";
 import Repetition from "@/components/repetition";
 import MainContent from "@/components/main-content";
+import Header from "@/components/header";
+import Sprite from "@/components/sprite";
+import "../../../public/sprites/back.svg";
+import "../../../public/sprites/close.svg";
+import "../../../public/sprites/add.svg";
+import "../../../public/sprites/play.svg";
 
 export default {
   components: {
-    Headline,
+    InputText,
     Repetition,
     MainContent,
     Actions,
-    Action
+    Action,
+    HeaderVue: Header,
+    Sprite
   },
   computed: {
     id() {
@@ -103,23 +120,24 @@ export default {
     },
     onDeleteClick() {
       this.$store.commit("workouts/delete", this.id);
-      this.$router.push("/workouts");
+      this.$router.push("/");
     },
     onAddClick() {
       this.$store.commit("workouts/addRepetition", this.id);
     },
-    onRepetitionChange(payload, index) {
+    onRepetitionChange(payload, id) {
       const repetitions = [...this.item.repetitions];
+      const index = repetitions.findIndex(a => a.id === payload.id);
       repetitions[index] = payload;
       this.$store.commit("workouts/update", {
         id: this.id,
         params: { repetitions }
       });
     },
-    onRepetitionDelete(index) {
+    onRepetitionDelete(id) {
       this.$store.commit("workouts/deleteRepetition", {
-        id: this.id,
-        index
+        setId: this.id,
+        id
       });
     }
   }
@@ -131,6 +149,10 @@ export default {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.content {
+  align-items: center;
 }
 
 .repetitions {

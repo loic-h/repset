@@ -1,51 +1,55 @@
 <template>
-  <div class="repetition">
-    <ul>
-      <li
-        v-for="(item, index) in items"
-        :key="index"
-        class="span">
-        <span class="label">
-          {{ item.label }}
-        </span>
-        <span class="time">
-          <counter
-            :time="item.duration"
-            @change="value => onTimeUpdate(value, index)"
-            :edit="true" />
-        </span>
-      </li>
-    </ul>
-    <span class="repeat">
-      x
-      <input-number
-        :value="repeat"
-        :edit="true"
-        @input="onRepeatUpdate" />
-    </span>
-    <ul class="actions">
-      <li>
-        <button @click="onDeleteClick">
-          Delete
-        </button>
-      </li>
-    </ul>
+  <div class="repetition"
+    v-touch:swipe.left="onLeftSwipe"
+    v-touch:swipe.right="onRightSwipe">
+    <div :class="{
+      'container': true,
+      'is-swiped': swiped
+    }">
+      <ul class="span-list">
+        <li
+          v-for="(item, index) in items"
+          :key="index"
+          class="span">
+          <span class="time">
+            <counter
+              :time="item.duration"
+              @change="value => onTimeUpdate(value, index)" />
+          </span>
+          <span class="label">
+            {{ item.label }}
+          </span>
+        </li>
+      </ul>
+      <span class="repeat">
+        × {{ repeat }}
+      </span>
+    </div>
+    <button class="delete" @click="onDeleteClick">
+      <sprite id="close" />
+    </button>
   </div>
 </template>
 
 <script>
 import Counter from "./counter";
-import InputNumber from "./input-number";
+import Sprite from "./sprite";
+import "../../public/sprites/close.svg";
 
 export default {
   components: {
     Counter,
-    InputNumber
+    Sprite
   },
   props: {
-    index: { type: Number, default: 0 },
+    id: { type: String, default: "" },
     repeat: { type: Number, default: 0 },
     items: { type: Array, default: () => [] }
+  },
+  data() {
+    return {
+      swiped: false
+    };
   },
   methods: {
     onTimeUpdate(value, index) {
@@ -57,16 +61,22 @@ export default {
       this.$emit("change", {
         repeat: this.repeat,
         items
-      }, this.index);
+      }, this.id);
     },
     onRepeatUpdate(value) {
       this.$emit("change", {
         repeat: parseInt(value),
         items: this.items
-      }, this.index);
+      }, this.id);
     },
     onDeleteClick() {
-      this.$emit("delete", this.index);
+      this.$emit("delete", this.id);
+    },
+    onLeftSwipe() {
+      this.swiped = true;
+    },
+    onRightSwipe() {
+      this.swiped = false;
     }
   }
 };
@@ -75,37 +85,54 @@ export default {
 <style scoped>
 .repetition {
   position: relative;
-  padding: 0.5rem 1rem;
   margin-bottom: 2rem;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
   border-radius: var(--span-border-radius);
-  background: var(--span-backgound);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  transition: transform 0.1s ease-in-out;
+  background: var(--white);
+  z-index: 2;
+}
+
+.is-swiped {
+  transform: translateX(-3rem);
+}
+
+.span-list {
+  flex-grow: 1;
 }
 
 .span {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 }
 
-.label {
-  font-weight: bold;
-  font-style: italic;
+.span:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .time {
+  margin-right: 1rem;
   font-size: var(--font-size-counter);
 }
 
 .repeat {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
   display: flex;
-  transform: translate(-50%, 50%);
   font-size: var(--font-size-repeat);
-  border-radius: var(--span-border-radius);
-  border: var(--span-backgound) solid 3px;
-  background-color: var(--white);
-  padding: 0.125rem 0.5rem;
+}
+
+.delete {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1;
 }
 </style>

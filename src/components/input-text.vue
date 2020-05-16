@@ -1,5 +1,5 @@
 <template>
-  <div class="headline">
+  <div class="input-text">
     <input
       v-if="edit"
       class="input"
@@ -33,20 +33,7 @@ export default {
 </script>
 
 <style scoped>
-.headline {
-  position: sticky;
-  top: 0;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding: var(--space);
-  box-sizing: border-box;
-  z-index: 1;
-  background-color: var(--white);
-}
-
 .input {
   text-align: center;
-  text-decoration: underline;
 }
 </style>
