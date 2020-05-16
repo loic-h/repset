@@ -1,17 +1,23 @@
-const startPayload = {
+const START_PAYLOAD = {
   startTime: null,
   offsetTime: 0,
   running: false
-}
+};
 
-const state = [];
+const COUNTDOWN_DURATION = 5000;
+
+const state = {
+  items: [],
+  countdown: false,
+  displayed: null
+};
 
 const getters = {
   getTimerById: state => id => {
-    return state.find(item => item.id === id);
+    return state.items.find(item => item.id === id);
   },
   getIndexById: state => id => {
-    return state.findIndex(item => item.id === id);
+    return state.items.findIndex(item => item.id === id);
   },
   getTimerTime: (state, getters) => id => {
     const timer = getters.getTimerById(id);
@@ -20,8 +26,10 @@ const getters = {
     }
     if (timer.running) {
       return timer.offsetTime + Date.now() - timer.startTime;
+    } else {
+
+      return timer.offsetTime;
     }
-    return timer.offsetTime;
   },
   isRunning: (state, getters) => id => {
     const timer = getters.getTimerById(id);
@@ -29,6 +37,10 @@ const getters = {
       return timer.running;
     }
     return false;
+  },
+  isCurrentRunning: (state, getters) => () => {
+    const id = state.displayed;
+    return (getters.isReset(id) && state.countdown) || getters.isRunning(id);
   },
   isReset: (state, getters) => id => {
     const timer = getters.getTimerById(id);
@@ -41,34 +53,40 @@ const getters = {
 
 const mutations = {
   create(state, id) {
-    state.push({
-      ...startPayload,
+    state.items.push({
+      ...START_PAYLOAD,
       id
     });
   },
   run(state, index) {
-    state.splice(index, 1, {
-      ...state[index],
+    state.items.splice(index, 1, {
+      ...state.items[index],
       startTime: Date.now(),
       running: true
     });
   },
   pause(state, index) {
     const now = Date.now();
-    state.splice(index, 1, {
-      ...state[index],
+    state.items.splice(index, 1, {
+      ...state.items[index],
       startTime: now,
-      offsetTime: state[index].offsetTime + now - state[index].startTime,
+      offsetTime: state.items[index].offsetTime + now - state.items[index].startTime,
       running: false
     });
   },
   stop(state, index) {
-    state.splice(index, 1, {
-      ...state[index],
+    state.items.splice(index, 1, {
+      ...state.items[index],
       startTime: null,
       offsetTime: 0,
       running: false
     });
+  },
+  display(state, id) {
+    state.displayed = id;
+  },
+  countdown(state, value) {
+    state.countdown = value;
   }
 };
 
@@ -79,16 +97,36 @@ const actions = {
     }
   },
   run({ commit, dispatch, getters }, id) {
+    const index = getters.getIndexById(id);
     dispatch("create", id);
-    commit("run", getters.getIndexById(id));
+    commit("run", index);
   },
-  pause({ commit, dispatch, getters }, id) {
+  pause({ commit,dispatch, getters }, id) {
+    const index = getters.getIndexById(id);
     dispatch("create", id);
-    commit("pause", getters.getIndexById(id));
+    commit("pause", index);
   },
   stop({ commit, dispatch, getters }, id) {
+    const index = getters.getIndexById(id);
     dispatch("create", id);
-    commit("stop", getters.getIndexById(id));
+    commit("stop", index);
+    commit("countdown", false);
+  },
+  currentWorkoutRun({ commit, dispatch, getters, state }) {
+    const id = state.displayed;
+    if (getters.isReset(id)) {
+      commit("countdown", true);
+    } else {
+      dispatch("run", id);
+    }
+  },
+  currentWorkoutPause({ commit, dispatch, getters, state }) {
+    const id = state.displayed;
+    if (getters.isReset(id)) {
+      commit("countdown", false);
+    } else {
+      dispatch("pause", id);
+    }
   }
 };
 

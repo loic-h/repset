@@ -3,7 +3,7 @@
     v-touch:swipe.left="onLeftSwipe"
     v-touch:swipe.right="onRightSwipe">
     <div :class="{
-      'container': true,
+      'inner': true,
       'is-swiped': swiped
     }">
       <ul class="span-list">
@@ -88,7 +88,7 @@ export default {
   margin-bottom: 2rem;
 }
 
-.container {
+.inner {
   position: relative;
   display: flex;
   align-items: center;

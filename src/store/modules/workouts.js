@@ -24,11 +24,11 @@ const getters = {
       ...state.sets[id]
     }));
   },
-  getSetById: state => id => {
+  getWorkoutById: state => id => {
     return state.sets[id];
   },
   getFlatRepetitions: (state, getters) => id => {
-    const item = getters.getSetById(id);
+    const item = getters.getWorkoutById(id);
     let repetitions = [];
     for(let rep of item.repetitions) {
       for (let i = 0; i < rep.repeat; i++) {

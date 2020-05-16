@@ -1,19 +1,13 @@
 <template>
-  <div class="countdown">
-    <h2>GET READY</h2>
-    <counter :time="time" />
+  <div class="counter">
+    {{ timeInSeconds }}
   </div>
 </template>
 
 <script>
-import Counter from "@/components/counter";
-
 export default {
-  components: {
-    Counter
-  },
   props: {
-    total: { type: Number, default: 3000 },
+    total: { type: Number, default: 5000 },
     active: { type: Boolean }
   },
   data() {
@@ -21,6 +15,11 @@ export default {
       time: this.total,
       startTime: null,
       offsetTime: 0
+    }
+  },
+  computed: {
+    timeInSeconds() {
+      return Math.floor(this.time / 1000);
     }
   },
   watch: {
@@ -51,3 +50,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.counter {
+  font-size: var(--font-size-clock);
+}
+</style>

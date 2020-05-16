@@ -3,9 +3,9 @@
     <template v-if="item">
       <header-vue>
         <template v-slot:left>
-          <button @click="onBackClick">
+          <router-link to="/">
             <sprite id="back" />
-          </button>
+          </router-link>
         </template>
         <template v-slot:headline>
           <input-text
@@ -82,14 +82,14 @@ export default {
       return this.$store.getters["timers/getTimerById"](this.id);
     },
     isRunning() {
-      return this.timer.running;
+      return this.timer && this.timer.running;
     }
   },
   watch: {
     item: {
       handler(newValue) {
         if (!newValue) {
-          this.$router.push("/workouts");
+          this.$router.push("/");
           return;
         }
       },

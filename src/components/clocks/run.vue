@@ -2,9 +2,6 @@
   <div
     v-if="currentSet"
     class="clock">
-    <h2 class="label">
-      {{ currentSet.label }}
-    </h2>
     <counter
       class="counter"
       :time="time" />
@@ -65,7 +62,9 @@ export default {
           return time + set.duration;
         }, 0);
         this.timeOffinishedSets = time;
-      }
+        this.$emit("set", value);
+      },
+      immediate: true
     },
     startTime(value) {
       this.update();
